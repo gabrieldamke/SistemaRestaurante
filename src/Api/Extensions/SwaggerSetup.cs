@@ -24,6 +24,7 @@ public static class SwaggerSetup
             });
 
             options.UseInlineDefinitionsForEnums();
+            options.UseAllOfToExtendReferenceSchemas();
         });
         services.AddSwaggerGenNewtonsoftSupport();
     }
