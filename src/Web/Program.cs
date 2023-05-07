@@ -1,7 +1,18 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Web.ApiClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient<IClient, Client>((service, client) =>
+{
+    if (service.GetService(typeof(Client)) is not Client c) return;
+    c.JsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+    c.JsonSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    c.JsonSerializerSettings.Converters.Add(new StringEnumConverter());
+});
 
 var app = builder.Build();
 
