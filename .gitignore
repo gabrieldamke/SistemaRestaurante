@@ -475,3 +475,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# IDEA
+.idea/
+
+# Database
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
