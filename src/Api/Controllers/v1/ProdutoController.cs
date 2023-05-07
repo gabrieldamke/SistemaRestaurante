@@ -24,7 +24,7 @@ public class ProdutoController : ApiBaseController
     /// <param name="pageIndex"></param>
     /// <param name="pageSize"></param>
     /// <returns></returns>
-    [HttpGet(Name = "GetAllPaginated")]
+    [HttpGet(Name = "GetAllProdutosPaginated")]
     [ProducesResponseType(typeof(PaginatedList<Produto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -40,7 +40,7 @@ public class ProdutoController : ApiBaseController
     /// <param name="name"></param>
     /// <param name="categoriaId"></param>
     /// <returns></returns>
-    [HttpGet("filter", Name = "GetAllFiltered")]
+    [HttpGet("filter", Name = "GetAllProdutosFiltered")]
     [ProducesResponseType(typeof(IEnumerable<Produto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -56,7 +56,7 @@ public class ProdutoController : ApiBaseController
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("{id}", Name = "GetById")]
+    [HttpGet("{id}", Name = "GetProdutoById")]
     [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -76,7 +76,7 @@ public class ProdutoController : ApiBaseController
     /// </summary>
     /// <param name="produto"></param>
     /// <returns></returns>
-    [HttpPost(Name = "Create")]
+    [HttpPost(Name = "CreateProduto")]
     [ProducesResponseType(typeof(Produto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -92,7 +92,7 @@ public class ProdutoController : ApiBaseController
     /// <param name="id"></param>
     /// <param name="produto"></param>
     /// <returns></returns>
-    [HttpPut("{id}", Name = "Update")]
+    [HttpPut("{id}", Name = "UpdateProduto")]
     [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -107,7 +107,7 @@ public class ProdutoController : ApiBaseController
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}", Name = "Delete")]
+    [HttpDelete("{id}", Name = "DeleteProduto")]
     [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]

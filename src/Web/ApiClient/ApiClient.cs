@@ -3319,9 +3319,9 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProdutoPaginatedList> GetAllPaginatedAsync(int? pageIndex, int? pageSize)
+        public virtual System.Threading.Tasks.Task<ProdutoPaginatedList> GetAllProdutosPaginatedAsync(int? pageIndex, int? pageSize)
         {
-            return GetAllPaginatedAsync(pageIndex, pageSize, System.Threading.CancellationToken.None);
+            return GetAllProdutosPaginatedAsync(pageIndex, pageSize, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3330,7 +3330,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProdutoPaginatedList> GetAllPaginatedAsync(int? pageIndex, int? pageSize, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ProdutoPaginatedList> GetAllProdutosPaginatedAsync(int? pageIndex, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Produto?");
@@ -3428,9 +3428,9 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Produto> CreateAsync(Produto body)
+        public virtual System.Threading.Tasks.Task<Produto> CreateProdutoAsync(Produto body)
         {
-            return CreateAsync(body, System.Threading.CancellationToken.None);
+            return CreateProdutoAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3439,7 +3439,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Produto> CreateAsync(Produto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Produto> CreateProdutoAsync(Produto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Produto");
@@ -3532,9 +3532,9 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllFilteredAsync(string name, int? categoriaId)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllProdutosFilteredAsync(string name, int? categoriaId)
         {
-            return GetAllFilteredAsync(name, categoriaId, System.Threading.CancellationToken.None);
+            return GetAllProdutosFilteredAsync(name, categoriaId, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3543,7 +3543,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllFilteredAsync(string name, int? categoriaId, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllProdutosFilteredAsync(string name, int? categoriaId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v1/Produto/filter?");
@@ -3641,9 +3641,9 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Produto> GetByIdAsync(int id)
+        public virtual System.Threading.Tasks.Task<Produto> GetProdutoByIdAsync(int id)
         {
-            return GetByIdAsync(id, System.Threading.CancellationToken.None);
+            return GetProdutoByIdAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3652,7 +3652,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Produto> GetByIdAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Produto> GetProdutoByIdAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3745,9 +3745,9 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Produto> UpdateAsync(int id, Produto body)
+        public virtual System.Threading.Tasks.Task<Produto> UpdateProdutoAsync(int id, Produto body)
         {
-            return UpdateAsync(id, body, System.Threading.CancellationToken.None);
+            return UpdateProdutoAsync(id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3756,7 +3756,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Produto> UpdateAsync(int id, Produto body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Produto> UpdateProdutoAsync(int id, Produto body, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3853,9 +3853,9 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Produto> DeleteAsync(int id)
+        public virtual System.Threading.Tasks.Task<Produto> DeleteProdutoAsync(int id)
         {
-            return DeleteAsync(id, System.Threading.CancellationToken.None);
+            return DeleteProdutoAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3864,7 +3864,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Produto> DeleteAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Produto> DeleteProdutoAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");

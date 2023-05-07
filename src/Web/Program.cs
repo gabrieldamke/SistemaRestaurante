@@ -1,7 +1,10 @@
+using Web.ApiClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient<IClient, Client>();
 
 var app = builder.Build();
 
