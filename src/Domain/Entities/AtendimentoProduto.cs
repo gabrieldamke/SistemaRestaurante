@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entities.Shared;
 
 namespace Domain.Entities;
 
-public class AtendimentoProduto
+public class AtendimentoProduto : Entity
 {
     public int AtendimentoId { get; set; }
     public Atendimento Atendimento { get; set; }

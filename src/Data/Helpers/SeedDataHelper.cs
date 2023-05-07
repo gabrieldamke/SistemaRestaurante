@@ -94,17 +94,17 @@ public static class SeedDataHelper
         );
 
         modelBuilder.Entity<AtendimentoProduto>().HasData(
-            new AtendimentoProduto { AtendimentoId = 1, ProdutoId = 1, Quantidade = 1, Preco = 24.9m },
-            new AtendimentoProduto { AtendimentoId = 1, ProdutoId = 2, Quantidade = 2, Preco = 39.9m },
-            new AtendimentoProduto { AtendimentoId = 1, ProdutoId = 3, Quantidade = 1, Preco = 40 },
-            new AtendimentoProduto { AtendimentoId = 1, ProdutoId = 4, Quantidade = 3, Preco = 9.9m },
-            new AtendimentoProduto { AtendimentoId = 1, ProdutoId = 5, Quantidade = 5, Preco = 14.9m },
-            new AtendimentoProduto { AtendimentoId = 2, ProdutoId = 1, Quantidade = 3, Preco = 25.9m },
-            new AtendimentoProduto { AtendimentoId = 2, ProdutoId = 2, Quantidade = 4, Preco = 37.5m },
-            new AtendimentoProduto { AtendimentoId = 2, ProdutoId = 3, Quantidade = 3, Preco = 39.9m },
-            new AtendimentoProduto { AtendimentoId = 2, ProdutoId = 4, Quantidade = 2, Preco = 17.9m },
-            new AtendimentoProduto { AtendimentoId = 2, ProdutoId = 5, Quantidade = 5, Preco = 15.9m },
-            new AtendimentoProduto { AtendimentoId = 2, ProdutoId = 6, Quantidade = 1, Preco = 69.9m }
+            new AtendimentoProduto { Id = 1, AtendimentoId = 1, ProdutoId = 1, Quantidade = 1, Preco = 24.9m },
+            new AtendimentoProduto { Id = 2, AtendimentoId = 1, ProdutoId = 2, Quantidade = 2, Preco = 39.9m },
+            new AtendimentoProduto { Id = 3, AtendimentoId = 1, ProdutoId = 3, Quantidade = 1, Preco = 40 },
+            new AtendimentoProduto { Id = 4, AtendimentoId = 1, ProdutoId = 4, Quantidade = 3, Preco = 9.9m },
+            new AtendimentoProduto { Id = 5, AtendimentoId = 1, ProdutoId = 5, Quantidade = 5, Preco = 14.9m },
+            new AtendimentoProduto { Id = 6, AtendimentoId = 2, ProdutoId = 1, Quantidade = 3, Preco = 25.9m },
+            new AtendimentoProduto { Id = 7, AtendimentoId = 2, ProdutoId = 2, Quantidade = 4, Preco = 37.5m },
+            new AtendimentoProduto { Id = 8, AtendimentoId = 2, ProdutoId = 3, Quantidade = 3, Preco = 39.9m },
+            new AtendimentoProduto { Id = 9, AtendimentoId = 2, ProdutoId = 4, Quantidade = 2, Preco = 17.9m },
+            new AtendimentoProduto { Id = 10, AtendimentoId = 2, ProdutoId = 5, Quantidade = 5, Preco = 15.9m },
+            new AtendimentoProduto { Id = 11, AtendimentoId = 2, ProdutoId = 6, Quantidade = 1, Preco = 69.9m }
         );
     }
 }

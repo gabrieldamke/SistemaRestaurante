@@ -5,78 +5,113 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+/// <summary>
+/// Categorias
+/// </summary>
 [ApiVersion("1.0")]
 public class CategoriaController : ApiBaseController
 {
-    private readonly IRepository<Categoria> _categoriaRepository;
+    private readonly IEntityRepository<Categoria> _categoriaEntityRepository;
 
-    public CategoriaController(IRepository<Categoria> categoriaRepository)
+    public CategoriaController(IEntityRepository<Categoria> categoriaEntityRepository)
     {
-        _categoriaRepository = categoriaRepository;
+        _categoriaEntityRepository = categoriaEntityRepository;
     }
 
-    [HttpGet(Name = "Obtém todas as categorias de forma paginada")]
+    /// <summary>
+    /// Obtém todas as categorias de forma paginada
+    /// </summary>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    [HttpGet(Name = "GetAllCategoriasPaginated")]
     [ProducesResponseType(typeof(PaginatedList<Categoria>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10)
     {
-        var categorias = await _categoriaRepository.GetPaginatedListAsync(pageIndex, pageSize);
+        var categorias = await _categoriaEntityRepository.GetPaginatedListAsync(pageIndex, pageSize);
         return Ok(categorias);
     }
 
-    [HttpGet("filter", Name = "Obtém todas as categorias com filtro")]
+    /// <summary>
+    /// Obtém todas as categorias com filtro
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    [HttpGet("filter", Name = "GetAllCategoriasFiltered")]
     [ProducesResponseType(typeof(IEnumerable<Categoria>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllFiltered([FromQuery] string? name)
     {
-        var categorias = await _categoriaRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty));
+        var categorias = await _categoriaEntityRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty));
         return Ok(categorias);
     }
 
-    [HttpGet("{id}", Name = "Obtém uma categoria pelo seu id")]
+    /// <summary>
+    /// Obtém uma categoria pelo seu id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{id}", Name = "GetCategoriaById")]
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetById(int id)
     {
-        var categoria = await _categoriaRepository.GetByIdAsync(id);
+        var categoria = await _categoriaEntityRepository.GetByIdAsync(id);
         if (categoria == null)
         {
             return NotFound();
         }
-        
+
         return Ok(categoria);
     }
 
-    [HttpPost(Name = "Cria uma nova categoria")]
+    /// <summary>
+    /// Cria uma nova categoria
+    /// </summary>
+    /// <param name="categoria"></param>
+    /// <returns></returns>
+    [HttpPost(Name = "CreateCategoria")]
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] Categoria categoria)
     {
-        var categoriaCriada = await _categoriaRepository.AddAsync(categoria);
+        var categoriaCriada = await _categoriaEntityRepository.AddAsync(categoria);
         return CreatedAtAction(nameof(GetById), new { id = categoriaCriada.Id }, categoriaCriada);
     }
 
-    [HttpPut("{id}", Name = "Atualiza uma categoria")]
+    /// <summary>
+    /// Atualiza uma categoria
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="categoria"></param>
+    /// <returns></returns>
+    [HttpPut("{id}", Name = "UpdateCategoria")]
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int id, [FromBody] Categoria categoria)
     {
-        var categoriaCriada = await _categoriaRepository.UpdateAsync(categoria);
+        var categoriaCriada = await _categoriaEntityRepository.UpdateAsync(categoria);
         return Ok(categoriaCriada);
     }
 
-    [HttpDelete("{id}", Name = "Deleta uma categoria")]
+    /// <summary>
+    /// Deleta uma categoria
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}", Name = "DeleteCategoria")]
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
-        var categoriaDeletada = await _categoriaRepository.DeleteAsync(id);
+        var categoriaDeletada = await _categoriaEntityRepository.DeleteAsync(id);
         return Ok(categoriaDeletada);
     }
 }

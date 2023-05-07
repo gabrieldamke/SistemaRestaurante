@@ -4,7 +4,7 @@ using Domain.Types;
 
 namespace Domain.Interfaces;
 
-public interface IRepository<TEntity> where TEntity : Entity
+public interface IEntityRepository<TEntity> where TEntity : Entity
 {
     Task<PaginatedList<TEntity>> GetPaginatedListAsync(
         int pageIndex, int pageSize, Expression<Func<TEntity, bool>>? filter = null,

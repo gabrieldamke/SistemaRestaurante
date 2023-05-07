@@ -13,6 +13,6 @@ public static class ServicesInjectorConfig
             options.UseSqlite(configuration.GetConnectionString("RestauranteDb"))
                 .EnableSensitiveDataLogging());
 
-        services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+        services.AddScoped(typeof(IEntityRepository<>), typeof(BaseEntityRepository<>));
     }
 }

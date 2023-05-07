@@ -57,6 +57,20 @@ public class RestauranteDbContext : DbContext
                 j => { j.HasKey(ap => new { ap.AtendimentoId, ap.ProdutoId }); }
             );
         
+        modelBuilder
+            .Entity<Garcom>()
+            .HasMany(g => g.Atendimentos)
+            .WithOne(a => a.Garcom)
+            .HasForeignKey(a => a.GarcomId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder
+            .Entity<Mesa>()
+            .HasMany(m => m.Atendimentos)
+            .WithOne(a => a.Mesa)
+            .HasForeignKey(a => a.MesaId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.SeedData();
     }
 }

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
 
-public class BaseRepository<T> : IRepository<T> where T : Entity
+public class BaseEntityRepository<T> : IEntityRepository<T> where T : Entity
 {
     private readonly RestauranteDbContext _context;
 
-    public BaseRepository(RestauranteDbContext context)
+    public BaseEntityRepository(RestauranteDbContext context)
     {
         _context = context;
     }
@@ -111,11 +111,14 @@ public class BaseRepository<T> : IRepository<T> where T : Entity
         await _context.SaveChangesAsync();
         return entry.Entity;
     }
-
-    private IQueryable<T> IncludeAll(IQueryable<T> query)
+    
+    private static IQueryable<T> IncludeAll(IQueryable<T> queryable)
     {
-        var entityType = query.GetType();
-        var properties = entityType.GetProperties().Where(x => x.PropertyType.IsSubclassOf(typeof(Entity)));
-        return properties.Aggregate(query, (current, property) => current.Include(property.Name));
+        var entityType = queryable.GetType().GetGenericArguments()[0];
+        var properties = entityType.GetProperties()
+            .Where(p => (p.PropertyType.IsClass && p.PropertyType != typeof(string)) || p.PropertyType.IsInterface &&
+                        p.PropertyType != typeof(IEnumerable<>));
+
+        return properties.Aggregate(queryable, (current, property) => current.Include(property.Name));
     }
 }

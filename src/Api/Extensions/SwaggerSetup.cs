@@ -22,7 +22,10 @@ public static class SwaggerSetup
                 Version = "v1",
                 Description = "API para Restaurante"
             });
+
+            options.UseInlineDefinitionsForEnums();
         });
+        services.AddSwaggerGenNewtonsoftSupport();
     }
 
     public static void UseSwaggerUI(this WebApplication app)
