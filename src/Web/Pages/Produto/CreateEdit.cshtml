@@ -1,0 +1,41 @@
+﻿@page "{handler?}"
+@model Web.Pages.Produto.CreateEdit
+
+@{
+    Layout = "_Layout";
+    string action = Model.Produto?.Id > 0 ? "Editar" : "Criar";
+    ViewData["Title"] = $"{action} Produto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <form method="post">
+        <div>
+            <input hidden="hidden" asp-for="Produto.Id"/>
+        </div>
+        <div>
+            <label asp-for="Produto.Nome"></label>
+            <input asp-for="Produto.Nome"/>
+            <span asp-validation-for="Produto.Nome"></span>
+        </div>
+        <div>
+            <label asp-for="Produto.Descricao"></label>
+            <input asp-for="Produto.Descricao"/>
+            <span asp-validation-for="Produto.Descricao"></span>
+        </div>
+        <div>
+            <label asp-for="Produto.Preco"></label>
+            <input asp-for="Produto.Preco"/>
+            <span asp-validation-for="Produto.Preco"></span>
+        </div>
+        <div>
+            <label asp-for="Produto.CategoriaId"></label>
+            <select asp-for="Produto.CategoriaId" asp-items="Model.Categorias"></select>
+            <span asp-validation-for="Produto.CategoriaId"></span>
+        </div>
+        <div>
+            <input type="submit" value="Salvar"/>
+        </div>
+    </form>
+</div>

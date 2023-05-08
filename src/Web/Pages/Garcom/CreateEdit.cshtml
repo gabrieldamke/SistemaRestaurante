@@ -1,0 +1,36 @@
+﻿@page "{handler?}"
+@model Web.Pages.Garcom.CreateEdit
+
+@{
+    Layout = "_Layout";
+    string action = Model.Garcom?.Id > 0 ? "Editar" : "Criar";
+    ViewData["Title"] = $"{action} Garçom";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <form method="post">
+        <div>
+            <input hidden="hidden" asp-for="Garcom.Id"/>
+        </div>
+        <div>
+            <label asp-for="Garcom.Nome"></label>
+            <input asp-for="Garcom.Nome"/>
+            <span asp-validation-for="Garcom.Nome"></span>
+        </div>
+        <div>
+            <label asp-for="Garcom.Sobrenome"></label>
+            <input asp-for="Garcom.Sobrenome"/>
+            <span asp-validation-for="Garcom.Sobrenome"></span>
+        </div>
+        <div>
+            <label asp-for="Garcom.NumeroTelefone"></label>
+            <input asp-for="Garcom.NumeroTelefone"/>
+            <span asp-validation-for="Garcom.NumeroTelefone"></span>
+        </div>
+        <div>
+            <input type="submit" value="Salvar"/>
+        </div>
+    </form>
+</div>

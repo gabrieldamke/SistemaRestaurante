@@ -1,0 +1,41 @@
+﻿@page "{handler?}"
+@model Web.Pages.Atendimento.CreateEdit
+
+@{
+    Layout = "_Layout";
+    string action = Model.Atendimento?.Id > 0 ? "Editar" : "Criar";
+    ViewData["Title"] = $"{action} Atendimento";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <form method="post">
+        <div>
+            <input hidden="hidden" asp-for="Atendimento.Id"/>
+        </div>
+        <div>
+            <label asp-for="Atendimento.HoraAbertura"></label>
+            <input asp-for="Atendimento.HoraAbertura"/>
+            <span asp-validation-for="Atendimento.HoraAbertura"></span>
+        </div>
+        <div>
+            <label asp-for="Atendimento.HoraFechamento"></label>
+            <input asp-for="Atendimento.HoraFechamento"/>
+            <span asp-validation-for="Atendimento.HoraFechamento"></span>
+        </div>
+        <div>
+            <label asp-for="Atendimento.MesaId"></label>
+            <select asp-for="Atendimento.MesaId" asp-items="Model.Mesas"></select>
+            <span asp-validation-for="Atendimento.MesaId"></span>
+        </div>
+        <div>
+            <label asp-for="Atendimento.GarcomId"></label>
+            <select asp-for="Atendimento.GarcomId" asp-items="Model.Garcons"></select>
+            <span asp-validation-for="Atendimento.GarcomId"></span>
+        </div>
+        <div>
+            <input type="submit" value="Salvar"/>
+        </div>
+    </form>
+</div>

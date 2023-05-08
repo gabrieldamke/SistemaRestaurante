@@ -1,0 +1,64 @@
+﻿@page "{id:int}"
+@model Web.Pages.Produto.Delete
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Excluir";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Produto</h4>
+    <hr/>
+
+    @if (Model.Produto is not null)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <label asp-for="Produto.Id"></label>
+            </dt>
+            <dd>
+                @Model.Produto.Id
+            </dd>
+            <dt>
+                <label asp-for="Produto.Nome"></label>
+            </dt>
+            <dd>
+                @Model.Produto.Nome
+            </dd>
+            <dt>
+                <label asp-for="Produto.Descricao"></label>
+            </dt>
+            <dd>
+                @Model.Produto.Descricao
+            </dd>
+            <dt>
+                <label asp-for="Produto.Preco"></label>
+            </dt>
+            <dd>
+                @Model.Produto.Preco
+            </dd>
+            <dt>
+                <label asp-for="Produto.Categoria"></label>
+            </dt>
+            <dd>
+                @Model.Produto.Categoria?.Nome
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <p>Nenhum produto encontrado.</p>
+    }
+</div>
+<div>
+    @if (Model.Produto is not null)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="Produto.Id"/>
+            <input type="submit" value="Excluir"/>
+        </form>
+    }
+    <a asp-page="Index">Voltar</a>
+</div>

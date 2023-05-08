@@ -1,0 +1,64 @@
+﻿@page "{id:int}"
+@model Web.Pages.Atendimento.Delete
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Excluir";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Atendimento</h4>
+    <hr/>
+
+    @if (Model.Atendimento is not null)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <label asp-for="Atendimento.Id"></label>
+            </dt>
+            <dd>
+                @Model.Atendimento.Id
+            </dd>
+            <dt>
+                <label asp-for="Atendimento.HoraAbertura"></label>
+            </dt>
+            <dd>
+                @Model.Atendimento.HoraAbertura
+            </dd>
+            <dt>
+                <label asp-for="Atendimento.HoraFechamento"></label>
+            </dt>
+            <dd>
+                @Model.Atendimento.HoraFechamento
+            </dd>
+            <dt>
+                <label asp-for="Atendimento.Mesa"></label>
+            </dt>
+            <dd>
+                @Model.Atendimento.Mesa.Numero
+            </dd>
+            <dt>
+                <label asp-for="Atendimento.Garcom"></label>
+            </dt>
+            <dd>
+                @Model.Atendimento.Garcom.Nome
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <p>Nenhum atendimento encontrado.</p>
+    }
+</div>
+<div>
+    @if (Model.Atendimento is not null)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="Atendimento.Id"/>
+            <input type="submit" value="Excluir"/>
+        </form>
+    }
+    <a asp-page="Index">Voltar</a>
+</div>

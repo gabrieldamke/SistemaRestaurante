@@ -1,0 +1,36 @@
+﻿@page "{handler?}"
+@model Web.Pages.Mesa.CreateEdit
+
+@{
+    Layout = "_Layout";
+    string action = Model.Mesa?.Id > 0 ? "Editar" : "Criar";
+    ViewData["Title"] = $"{action} Mesa";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <form method="post">
+        <div>
+            <input hidden="hidden" asp-for="Mesa.Id"/>
+        </div>
+        <div>
+            <label asp-for="Mesa.Numero"></label>
+            <input asp-for="Mesa.Numero"/>
+            <span asp-validation-for="Mesa.Numero"></span>
+        </div>
+        <div>
+            <label asp-for="Mesa.HoraAbertura"></label>
+            <input asp-for="Mesa.HoraAbertura"/>
+            <span asp-validation-for="Mesa.HoraAbertura"></span>
+        </div>
+        <div>
+            <label asp-for="Mesa.Status"></label>
+            <select asp-for="Mesa.Status" asp-items="Model.Status"></select>
+            <span asp-validation-for="Mesa.Status"></span>
+        </div>
+        <div>
+            <input type="submit" value="Salvar"/>
+        </div>
+    </form>
+</div>
