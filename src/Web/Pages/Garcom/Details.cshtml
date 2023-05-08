@@ -1,0 +1,87 @@
+﻿@page "{id:int}"
+@model Web.Pages.Garcom.Details
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Detalhes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Garçom</h4>
+    <hr/>
+    
+    @if (Model.Garcom is not null)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <label asp-for="Garcom.Id"></label>
+            </dt>
+            <dd>
+                @Model.Garcom.Id
+            </dd>
+            <dt>
+                <label asp-for="Garcom.Nome"></label>
+            </dt>
+            <dd>
+                @Model.Garcom.Nome @Model.Garcom.Sobrenome
+            </dd>
+            <dt>
+                <label asp-for="Garcom.NumeroTelefone"></label>
+            </dt>
+            <dd>
+                @Model.Garcom.NumeroTelefone
+            </dd>
+            <dt>
+                <label asp-for="Garcom.NumeroTelefone"></label>
+            </dt>
+        </dl>
+        
+        <hr/>
+        
+        @if (Model.Garcom.Atendimentos is not null)
+        {
+            <h4>Atendimentos</h4>
+            
+            <table>
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Hora de Abertura</th>
+                    <th>Hora de Fechamento</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var atendimento in Model.Garcom.Atendimentos)
+                {
+                    <tr>
+                        <td>@atendimento.Id</td>
+                        <td>@atendimento.HoraAbertura</td>
+                        <td>@atendimento.HoraFechamento</td>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@atendimento.Id">Detalhes</a> |
+                            <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id">Editar</a> |
+                            <a asp-page="Delete" asp-route-id="@atendimento.Id">Excluir</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    }
+    else
+    {
+        <p>Nenhum garçom encontrado.</p>
+    }
+</div>
+
+<div>
+    @if (Model.Garcom is not null)
+    {
+        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Garcom.Id">Editar</a>
+        <a asp-page="Delete" asp-route-id="@Model.Garcom.Id">Excluir</a>
+    }
+    <a asp-page="Index">Voltar</a>
+</div>

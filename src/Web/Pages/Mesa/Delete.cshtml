@@ -1,0 +1,58 @@
+﻿@page "{id:int}"
+@model Web.Pages.Mesa.Delete
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Excluir";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Mesa</h4>
+    <hr/>
+
+    @if (Model.Mesa is not null)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <label asp-for="Mesa.Id"></label>
+            </dt>
+            <dd>
+                @Model.Mesa.Id
+            </dd>
+            <dt>
+                <label asp-for="Mesa.Numero"></label>
+            </dt>
+            <dd>
+                @Model.Mesa.Numero
+            </dd>
+            <dt>
+                <label asp-for="Mesa.HoraAbertura"></label>
+            </dt>
+            <dd>
+                @Model.Mesa.HoraAbertura
+            </dd>
+            <dt>
+                <label asp-for="Mesa.Status"></label>
+            </dt>
+            <dd>
+                @Model.Mesa.Status
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <p>Nenhuma mesa encontrada.</p>
+    }
+</div>
+<div>
+    @if (Model.Mesa is not null)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="Mesa.Id"/>
+            <input type="submit" value="Excluir"/>
+        </form>
+    }
+    <a asp-page="Index">Voltar</a>
+</div>

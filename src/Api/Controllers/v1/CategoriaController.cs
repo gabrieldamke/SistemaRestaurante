@@ -23,14 +23,16 @@ public class CategoriaController : ApiBaseController
     /// </summary>
     /// <param name="pageIndex"></param>
     /// <param name="pageSize"></param>
+    /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet(Name = "GetAllCategoriasPaginated")]
     [ProducesResponseType(typeof(PaginatedList<Categoria>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10)
+    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
     {
-        var categorias = await _categoriaEntityRepository.GetPaginatedListAsync(pageIndex, pageSize);
+        var categorias =
+            await _categoriaEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
         return Ok(categorias);
     }
 
@@ -38,14 +40,17 @@ public class CategoriaController : ApiBaseController
     /// Obtém todas as categorias com filtro
     /// </summary>
     /// <param name="name"></param>
+    /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet("filter", Name = "GetAllCategoriasFiltered")]
     [ProducesResponseType(typeof(IEnumerable<Categoria>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name)
+    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name, bool includeAll = false)
     {
-        var categorias = await _categoriaEntityRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty));
+        var categorias =
+            await _categoriaEntityRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty),
+                includeAll: includeAll);
         return Ok(categorias);
     }
 

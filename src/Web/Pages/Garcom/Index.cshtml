@@ -1,0 +1,46 @@
+﻿@page
+@model Web.Pages.Garcom.Index
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Garçons";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+</div>
+
+@if (Model.Garcons is not null)
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Número de telefone</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var garcom in Model.Garcons.Items)
+        {
+            <tr>
+                <td>@garcom.Id</td>
+                <td>@garcom.Nome @garcom.Sobrenome</td>
+                <td>@garcom.NumeroTelefone</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@garcom.Id">Detalhes</a> |
+                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@garcom.Id">Editar</a> |
+                    <a asp-page="Delete" asp-route-id="@garcom.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum garçom cadastrado.</p>
+}

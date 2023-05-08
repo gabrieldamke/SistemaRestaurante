@@ -1,0 +1,51 @@
+﻿@page
+@model Web.Pages.Atendimento.Index
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Atendimentos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+</div>
+
+@if (Model.Atendimentos is not null)
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Hora de Abertura</th>
+            <th>Hora de Fechamento</th>
+            <th>Garçom</th>
+            <th>Mesa</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var atendimento in Model.Atendimentos.Items)
+        {
+            <tr>
+                <td>@atendimento.Id</td>
+                <td>@atendimento.HoraAbertura</td>
+                <td>@atendimento.HoraFechamento</td>
+                <td>@atendimento.Garcom?.Nome @atendimento.Garcom?.Sobrenome</td>
+                <td>@atendimento.Mesa!.Numero</td>
+                <td>@atendimento.Mesa.Status</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@atendimento.Id">Detalhes</a> |
+                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id">Editar</a> |
+                    <a asp-page="Delete" asp-route-id="@atendimento.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum atendimento cadastrado.</p>
+}

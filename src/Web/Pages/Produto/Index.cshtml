@@ -1,0 +1,50 @@
+﻿@page
+@model Web.Pages.Produto.Index
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Produtos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+</div>
+
+@if (Model.Produtos is not null)
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Categoria</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var produto in Model.Produtos.Items)
+        {
+            <tr>
+                <td>@produto.Id</td>
+                <td>@produto.Nome</td>
+                <td>@produto.Descricao</td>
+                <td>@produto.Preco</td>
+                <td>@produto.Categoria?.Nome</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@produto.Id">Detalhes</a> |
+                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@produto.Id">Editar</a> |
+                    <a asp-page="Delete" asp-route-id="@produto.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum produto cadastrado.</p>
+}

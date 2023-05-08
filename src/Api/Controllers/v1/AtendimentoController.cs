@@ -17,9 +17,13 @@ public class AtendimentoController : ApiBaseController
     private readonly IEntityRepository<Produto> _produtoEntityRepository;
     private readonly IEntityRepository<AtendimentoProduto> _atendimentoProdutoEntityRepository;
 
-    public AtendimentoController(IEntityRepository<Atendimento> atendimentoEntityRepository)
+    public AtendimentoController(IEntityRepository<Atendimento> atendimentoEntityRepository,
+        IEntityRepository<Produto> produtoEntityRepository,
+        IEntityRepository<AtendimentoProduto> atendimentoProdutoEntityRepository)
     {
         _atendimentoEntityRepository = atendimentoEntityRepository;
+        _produtoEntityRepository = produtoEntityRepository;
+        _atendimentoProdutoEntityRepository = atendimentoProdutoEntityRepository;
     }
 
     /// <summary>
@@ -27,15 +31,17 @@ public class AtendimentoController : ApiBaseController
     /// </summary>
     /// <param name="pageIndex"></param>
     /// <param name="pageSize"></param>
+    /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet(Name = "GetAllAtendimentosPaginated")]
     [ProducesResponseType(typeof(PaginatedList<Atendimento>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10)
+    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
     {
-        var Atendimentos = await _atendimentoEntityRepository.GetPaginatedListAsync(pageIndex, pageSize);
-        return Ok(Atendimentos);
+        var atendimentos =
+            await _atendimentoEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
+        return Ok(atendimentos);
     }
 
     /// <summary>
@@ -43,15 +49,18 @@ public class AtendimentoController : ApiBaseController
     /// </summary>
     /// <param name="mesaId"></param>
     /// <param name="garcomId"></param>
+    /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet("filter", Name = "GetAllAtendimentosFiltered")]
     [ProducesResponseType(typeof(IEnumerable<Atendimento>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered([FromQuery] int? mesaId, [FromQuery] int? garcomId)
+    public async Task<IActionResult> GetAllFiltered([FromQuery] int? mesaId, [FromQuery] int? garcomId,
+        bool includeAll = false)
     {
         var atendimentos =
-            await _atendimentoEntityRepository.GetAllAsync(x => x.MesaId == mesaId && x.GarcomId == garcomId);
+            await _atendimentoEntityRepository.GetAllAsync(x => x.MesaId == mesaId && x.GarcomId == garcomId,
+                includeAll: includeAll);
         return Ok(atendimentos);
     }
 
@@ -120,7 +129,12 @@ public class AtendimentoController : ApiBaseController
         var atendimentoDeletado = await _atendimentoEntityRepository.DeleteAsync(id);
         return Ok(atendimentoDeletado);
     }
-    
+
+    /// <summary>
+    /// Abrir uma conta para atendimento
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id}/open", Name = "OpenBill")]
     [ProducesResponseType(typeof(Atendimento), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -139,6 +153,11 @@ public class AtendimentoController : ApiBaseController
         return Ok(atendimentoAtualizado);
     }
 
+    /// <summary>
+    /// Fechar conta de atendimento
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id}/close", Name = "CloseBill")]
     [ProducesResponseType(typeof(Atendimento), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -157,6 +176,13 @@ public class AtendimentoController : ApiBaseController
         return Ok(atendimentoAtualizado);
     }
 
+    /// <summary>
+    /// Adicionar produto ao atendimento
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="produtoId"></param>
+    /// <param name="quantidade"></param>
+    /// <returns></returns>
     [HttpPut("{id}/add-produto", Name = "AddProduto")]
     [ProducesResponseType(typeof(AtendimentoProduto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -187,6 +213,12 @@ public class AtendimentoController : ApiBaseController
         return Ok(atendimentoProduto);
     }
 
+    /// <summary>
+    /// Remover produto do atendimento
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="produtoId"></param>
+    /// <returns></returns>
     [HttpPut("{id}/remove-produto", Name = "RemoveProduto")]
     [ProducesResponseType(typeof(AtendimentoProduto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

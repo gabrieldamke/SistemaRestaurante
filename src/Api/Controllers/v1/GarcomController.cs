@@ -23,14 +23,15 @@ public class GarcomController : ApiBaseController
     /// </summary>
     /// <param name="pageIndex"></param>
     /// <param name="pageSize"></param>
+    /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet(Name = "GetAllGarconsPaginated")]
     [ProducesResponseType(typeof(PaginatedList<Garcom>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10)
+    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
     {
-        var garcons = await _garcomEntityRepository.GetPaginatedListAsync(pageIndex, pageSize);
+        var garcons = await _garcomEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
         return Ok(garcons);
     }
 
@@ -38,14 +39,17 @@ public class GarcomController : ApiBaseController
     /// Obtém todos os garçons com filtro
     /// </summary>
     /// <param name="name"></param>
+    /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet("filter", Name = "GetAllGarconsFiltered")]
     [ProducesResponseType(typeof(IEnumerable<Garcom>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name)
+    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name, bool includeAll = false)
     {
-        var garcons = await _garcomEntityRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty));
+        var garcons =
+            await _garcomEntityRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty),
+                includeAll: includeAll);
         return Ok(garcons);
     }
 
@@ -66,7 +70,7 @@ public class GarcomController : ApiBaseController
         {
             return NotFound();
         }
-        
+
         return Ok(garcom);
     }
 
