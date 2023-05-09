@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var mesa in Model.Mesas.Items)
+        @foreach (var mesa in Model.Mesas)
         {
             <tr>
                 <td>@mesa.Id</td>
@@ -41,6 +41,8 @@
         }
         </tbody>
     </table>
+    
+    @await Html.PartialAsync("_Pagination", Model.PageViewModel)
 }
 else
 {

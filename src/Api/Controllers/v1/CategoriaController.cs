@@ -82,6 +82,7 @@ public class CategoriaController : ApiBaseController
     [HttpPost(Name = "CreateCategoria")]
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] Categoria categoria)
     {
@@ -98,6 +99,7 @@ public class CategoriaController : ApiBaseController
     [HttpPut("{id}", Name = "UpdateCategoria")]
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int id, [FromBody] Categoria categoria)
     {

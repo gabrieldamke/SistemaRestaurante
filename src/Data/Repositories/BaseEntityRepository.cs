@@ -1,8 +1,10 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data;
+using System.Linq.Expressions;
 using Data.Context;
 using Domain.Entities.Shared;
 using Domain.Interfaces;
 using Domain.Types;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
@@ -101,23 +103,38 @@ public class BaseEntityRepository<T> : IEntityRepository<T> where T : Entity
 
     public async Task<T> DeleteAsync(int id)
     {
-        var entity = await _context.Set<T>().FindAsync(id);
-        if (entity is null)
+        try
         {
-            throw new ArgumentException("Entity not found");
-        }
+            var entity = await _context.Set<T>().FindAsync(id);
+            if (entity is null)
+            {
+                throw new ArgumentException("Entidade nâo encontrada");
+            }
 
-        var entry = _context.Set<T>().Remove(entity);
-        await _context.SaveChangesAsync();
-        return entry.Entity;
+            var entry = _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
+            return entry.Entity;
+        }
+        catch (DbUpdateException e)
+        {
+            if (e.InnerException is not SqliteException sqliteException) throw;
+            switch (sqliteException)
+            {
+                case { SqliteExtendedErrorCode: 1811 }:
+                    throw new ConstraintException(
+                        "Não é possível excluir o registro pois há conflito em outros registros");
+                default:
+                    throw;
+            }
+        }
     }
-    
+
     private static IQueryable<T> IncludeAll(IQueryable<T> queryable)
     {
         var entityType = queryable.GetType().GetGenericArguments()[0];
         var properties = entityType.GetProperties()
             .Where(p => (p.PropertyType.IsClass && p.PropertyType != typeof(string)) || p.PropertyType.IsInterface &&
-                        p.PropertyType != typeof(IEnumerable<>));
+                p.PropertyType != typeof(IEnumerable<>));
 
         return properties.Aggregate(queryable, (current, property) => current.Include(property.Name));
     }

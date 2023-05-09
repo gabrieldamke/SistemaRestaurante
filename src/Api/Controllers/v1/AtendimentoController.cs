@@ -92,6 +92,7 @@ public class AtendimentoController : ApiBaseController
     [HttpPost(Name = "CreateAtendimento")]
     [ProducesResponseType(typeof(Atendimento), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] Atendimento atendimento)
     {
@@ -108,6 +109,7 @@ public class AtendimentoController : ApiBaseController
     [HttpPut("{id}", Name = "UpdateAtendimento")]
     [ProducesResponseType(typeof(Atendimento), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int id, [FromBody] Atendimento atendimento)
     {

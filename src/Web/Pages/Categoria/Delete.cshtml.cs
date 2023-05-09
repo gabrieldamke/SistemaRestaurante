@@ -3,23 +3,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Web.ApiClient;
 using ProblemDetails = Web.ApiClient.ProblemDetails;
 
-namespace Web.Pages.Atendimento;
+namespace Web.Pages.Categoria;
 
 public class Delete : PageModel
 {
-    public ApiClient.Atendimento Atendimento { get; set; }
+    public ApiClient.Categoria Categoria { get; set; }
     public IList<string> Errors { get; set; } = new List<string>();
 
     public async Task OnGetAsync([FromServices] IClient apiClient, int id)
     {
-        Atendimento = await apiClient.GetAtendimentoByIdAsync(id);
+        Categoria = await apiClient.GetCategoriaByIdAsync(id);
     }
 
     public async Task<IActionResult> OnPostAsync([FromServices] IClient apiClient, int id)
     {
         try
         {
-            await apiClient.DeleteAtendimentoAsync(id);
+            await apiClient.DeleteCategoriaAsync(id);
 
             return RedirectToPagePermanent(nameof(Index));
         }

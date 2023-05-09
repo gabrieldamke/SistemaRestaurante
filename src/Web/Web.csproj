@@ -7,14 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Model\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>
+      <AdditionalFiles Include="Pages\Categoria\CreateEdit.cshtml" />
+      <AdditionalFiles Include="Pages\Categoria\Delete.cshtml" />
+      <AdditionalFiles Include="Pages\Categoria\Details.cshtml" />
+      <AdditionalFiles Include="Pages\Categoria\Index.cshtml" />
       <AdditionalFiles Include="Pages\Garcom\CreateEdit.cshtml" />
       <AdditionalFiles Include="Pages\Garcom\Delete.cshtml" />
       <AdditionalFiles Include="Pages\Garcom\Details.cshtml" />

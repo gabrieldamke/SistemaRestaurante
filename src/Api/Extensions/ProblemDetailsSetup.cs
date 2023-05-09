@@ -26,7 +26,7 @@ public static class ProblemDetailsSetup
             .AddProblemDetailsConventions();
     }
 
-    public static void MapExceptionToStatusCodeWithMessage<TException>(this ProblemDetailsOptions options,
+    private static void MapExceptionToStatusCodeWithMessage<TException>(this ProblemDetailsOptions options,
         int statusCode) where TException : Exception
     {
         options.Map<TException>(ex => new StatusCodeProblemDetails(statusCode)

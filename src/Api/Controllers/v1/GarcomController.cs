@@ -82,6 +82,7 @@ public class GarcomController : ApiBaseController
     [HttpPost(Name = "CreateGarcom")]
     [ProducesResponseType(typeof(Garcom), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] Garcom garcom)
     {
@@ -98,6 +99,7 @@ public class GarcomController : ApiBaseController
     [HttpPut("{id}", Name = "UpdateGarcom")]
     [ProducesResponseType(typeof(Garcom), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int id, [FromBody] Garcom garcom)
     {

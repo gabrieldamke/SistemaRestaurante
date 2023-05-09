@@ -1,0 +1,51 @@
+﻿@page "{id:int}"
+@model Web.Pages.Categoria.Details
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Detalhes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Categoria</h4>
+    <hr/>
+    
+    @if (Model.Categoria is not null)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <label asp-for="Categoria.Id"></label>
+            </dt>
+            <dd>
+                @Model.Categoria.Id
+            </dd>
+            <dt>
+                <label asp-for="Categoria.Nome"></label>
+            </dt>
+            <dd>
+                @Model.Categoria.Nome
+            </dd>
+            <dt>
+                <label asp-for="Categoria.Descricao"></label>
+            </dt>
+            <dd>
+                @Model.Categoria.Descricao
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <p>Nenhuma categoria encontrada.</p>
+    }
+</div>
+
+<div>
+    @if (Model.Categoria is not null)
+    {
+        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Categoria.Id">Editar</a>
+        <a asp-page="Delete" asp-route-id="@Model.Categoria.Id">Excluir</a>
+    }
+    <a asp-page="Index">Voltar</a>
+</div>

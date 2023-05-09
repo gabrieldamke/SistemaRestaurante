@@ -31,7 +31,8 @@ public class ProdutoController : ApiBaseController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
     {
-        var produtos = await _produtoEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
+        var produtos =
+            await _produtoEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
         return Ok(produtos);
     }
 
@@ -46,7 +47,8 @@ public class ProdutoController : ApiBaseController
     [ProducesResponseType(typeof(IEnumerable<Produto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name, [FromQuery] int? categoriaId, bool includeAll = false)
+    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name, [FromQuery] int? categoriaId,
+        bool includeAll = false)
     {
         var produtos = await _produtoEntityRepository.GetAllAsync(x =>
             x.Nome.Contains(name ?? string.Empty) && x.CategoriaId == categoriaId, includeAll: includeAll);
@@ -81,6 +83,7 @@ public class ProdutoController : ApiBaseController
     [HttpPost(Name = "CreateProduto")]
     [ProducesResponseType(typeof(Produto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] Produto produto)
     {
@@ -97,6 +100,7 @@ public class ProdutoController : ApiBaseController
     [HttpPut("{id}", Name = "UpdateProduto")]
     [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int id, [FromBody] Produto produto)
     {
