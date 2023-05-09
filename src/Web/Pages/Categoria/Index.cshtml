@@ -1,0 +1,48 @@
+﻿@page
+@model Web.Pages.Categoria.Index
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Categorias";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+</div>
+
+@if (Model.Categorias is not null)
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var Categoria in Model.Categorias)
+        {
+            <tr>
+                <td>@Categoria.Id</td>
+                <td>@Categoria.Nome</td>
+                <td>@Categoria.Descricao</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@Categoria.Id">Detalhes</a> |
+                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Categoria.Id">Editar</a> |
+                    <a asp-page="Delete" asp-route-id="@Categoria.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    
+    @await Html.PartialAsync("_Pagination", Model.PageViewModel)
+}
+else
+{
+    <p>Nenhuma categoria cadastrada.</p>
+}

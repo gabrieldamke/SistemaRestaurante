@@ -1,5 +1,5 @@
 ﻿@page "{id:int}"
-@model Web.Pages.Mesa.Delete
+@model Web.Pages.Categoria.Delete
 
 @{
     Layout = "_Layout";
@@ -9,41 +9,35 @@
 <h2>@ViewData["Title"]</h2>
 
 <div>
-    <h4>Mesa</h4>
+    <h4>Categoria</h4>
     <hr/>
 
-    @if (Model.Mesa is not null)
+    @if (Model.Categoria is not null)
     {
         <dl class="dl-horizontal">
             <dt>
-                <label asp-for="Mesa.Id"></label>
+                <label asp-for="Categoria.Id"></label>
             </dt>
             <dd>
-                @Model.Mesa.Id
+                @Model.Categoria.Id
             </dd>
             <dt>
-                <label asp-for="Mesa.Numero"></label>
+                <label asp-for="Categoria.Nome"></label>
             </dt>
             <dd>
-                @Model.Mesa.Numero
+                @Model.Categoria.Nome
             </dd>
             <dt>
-                <label asp-for="Mesa.HoraAbertura"></label>
+                <label asp-for="Categoria.Descricao"></label>
             </dt>
             <dd>
-                @Model.Mesa.HoraAbertura
-            </dd>
-            <dt>
-                <label asp-for="Mesa.Status"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Status
+                @Model.Categoria.Descricao
             </dd>
         </dl>
     }
     else
     {
-        <p>Nenhuma mesa encontrada.</p>
+        <p>Nenhuma categoria encontrada.</p>
     }
 </div>
 
@@ -55,10 +49,10 @@
 </div>
 
 <div>
-    @if (Model.Mesa is not null)
+    @if (Model.Categoria is not null)
     {
         <form method="post">
-            <input type="hidden" asp-for="Mesa.Id"/>
+            <input type="hidden" asp-for="Categoria.Id"/>
             <input type="submit" value="Excluir"/>
         </form>
     }

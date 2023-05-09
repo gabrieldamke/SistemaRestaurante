@@ -26,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var atendimento in Model.Atendimentos.Items)
+        @foreach (var atendimento in Model.Atendimentos)
         {
             <tr>
                 <td>@atendimento.Id</td>
@@ -44,6 +44,8 @@
         }
         </tbody>
     </table>
+    
+    @await Html.PartialAsync("_Pagination", Model.PageViewModel)
 }
 else
 {

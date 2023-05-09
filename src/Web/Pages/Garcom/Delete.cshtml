@@ -43,6 +43,14 @@
         <p>Nenhum garçom encontrado.</p>
     }
 </div>
+
+<div>
+    @foreach (var error in Model.Errors)
+    {
+        <p class="text-danger">@error</p>
+    }
+</div>
+
 <div>
     @if (Model.Garcom is not null)
     {

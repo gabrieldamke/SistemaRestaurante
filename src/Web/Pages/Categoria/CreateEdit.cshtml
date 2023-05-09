@@ -1,0 +1,38 @@
+﻿@page "{handler?}"
+@model Web.Pages.Categoria.CreateEdit
+
+@{
+    Layout = "_Layout";
+    string action = Model.Categoria?.Id > 0 ? "Editar" : "Criar";
+    ViewData["Title"] = $"{action} Categoria";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <form method="post">
+        <div>
+            <input hidden="hidden" asp-for="Categoria.Id"/>
+        </div>
+        <div>
+            <label asp-for="Categoria.Nome"></label>
+            <input asp-for="Categoria.Nome"/>
+            <span asp-validation-for="Categoria.Nome"></span>
+        </div>
+        <div>
+            <label asp-for="Categoria.Descricao"></label>
+            <input asp-for="Categoria.Descricao"/>
+            <span asp-validation-for="Categoria.Descricao"></span>
+        </div>
+       <div>
+            <input type="submit" value="Salvar"/>
+        </div>
+    </form>
+    
+    <div>
+        @foreach (var error in Model.Errors)
+        {
+            <p class="text-danger">@error</p>
+        }
+    </div>
+</div>

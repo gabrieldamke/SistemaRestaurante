@@ -83,6 +83,7 @@ public class MesaController : ApiBaseController
     [HttpPost(Name = "CreateMesa")]
     [ProducesResponseType(typeof(Mesa), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Create([FromBody] Mesa mesa)
     {
@@ -99,6 +100,7 @@ public class MesaController : ApiBaseController
     [HttpPut("{id}", Name = "UpdateMesa")]
     [ProducesResponseType(typeof(Mesa), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update(int id, [FromBody] Mesa mesa)
     {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.ApiClient;
+using ProblemDetails = Web.ApiClient.ProblemDetails;
 
 namespace Web.Pages.Atendimento;
 
@@ -11,6 +12,7 @@ public class CreateEdit : PageModel
 
     public SelectList Garcons { get; set; }
     public SelectList Mesas { get; set; }
+    public IList<string> Errors { get; set; } = new List<string>();
 
     public async Task OnGetCreateAsync([FromServices] IClient apiClient)
     {
@@ -23,8 +25,21 @@ public class CreateEdit : PageModel
 
     public async Task<IActionResult> OnPostCreateAsync([FromServices] IClient apiClient)
     {
-        var atendimento = await apiClient.CreateAtendimentoAsync(Atendimento);
-        return RedirectToPagePermanent(nameof(Details), new { id = atendimento.Id });
+        try
+        {
+            var atendimento = await apiClient.CreateAtendimentoAsync(Atendimento);
+            return RedirectToPagePermanent(nameof(Details), new { id = atendimento.Id });
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            Errors.Add(e.Result.Detail ?? e.Result.Title ?? e.Message);
+            return Page();
+        }
+        catch (Exception e)
+        {
+            Errors.Add(e.Message);
+            return Page();
+        }
     }
 
     public async Task OnGetEditAsync([FromServices] IClient apiClient, int id)
@@ -38,7 +53,20 @@ public class CreateEdit : PageModel
 
     public async Task<IActionResult> OnPostEditAsync([FromServices] IClient apiClient)
     {
-        var atendimento = await apiClient.UpdateAtendimentoAsync(Atendimento.Id, Atendimento);
-        return RedirectToPagePermanent(nameof(Details), new { id = atendimento.Id });
+        try
+        {
+            var atendimento = await apiClient.UpdateAtendimentoAsync(Atendimento.Id, Atendimento);
+            return RedirectToPagePermanent(nameof(Details), new { id = atendimento.Id });
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            Errors.Add(e.Result.Detail ?? e.Result.Title ?? e.Message);
+            return Page();
+        }
+        catch (Exception e)
+        {
+            Errors.Add(e.Message);
+            return Page();
+        }
     }
 }

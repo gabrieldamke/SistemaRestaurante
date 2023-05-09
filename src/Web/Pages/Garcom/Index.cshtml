@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var garcom in Model.Garcons.Items)
+        @foreach (var garcom in Model.Garcons)
         {
             <tr>
                 <td>@garcom.Id</td>
@@ -39,6 +39,8 @@
         }
         </tbody>
     </table>
+    
+    @await Html.PartialAsync("_Pagination", Model.PageViewModel)
 }
 else
 {
