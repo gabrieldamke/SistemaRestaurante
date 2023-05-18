@@ -1,4 +1,5 @@
-﻿@page "{id:int}"
+﻿@page "{id:int?}"
+@using Web.ApiClient
 @model Web.Pages.Mesa.Details
 
 @{
@@ -11,7 +12,7 @@
 <div>
     <h4>Mesa</h4>
     <hr/>
-    
+
     @if (Model.Mesa is not null)
     {
         <dl class="dl-horizontal">
@@ -40,14 +41,35 @@
                 @Model.Mesa.Status
             </dd>
         </dl>
-        
+
+        @if (Model.Mesa.Status == MesaStatus.Livre)
+        {
+            <button onclick="abrirMesa()">Abrir Mesa</button>
+            <button onclick="reservarMesa()">Reservar Mesa</button>
+            
+            <form id="formMesa" hidden="hidden" method="post">
+                <div>
+                    <input hidden="hidden" asp-for="Mesa.Id"/>
+                </div>
+                <div>
+                    <label id="labelHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"></label>
+                    <input id="inputHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"/>
+                    <span asp-validation-for="Mesa.HoraAbertura"></span>
+                </div>
+
+                <div>
+                    <input type="submit" value="Enviar"/>
+                </div>
+            </form>
+        }
+
         <hr/>
-        
+
         @if (Model.Mesa.Atendimentos is not null)
         {
             <h4>Atendimentos</h4>
-            
-            <table>
+
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Código</th>
@@ -88,3 +110,19 @@
     }
     <a asp-page="Index">Voltar</a>
 </div>
+
+<script>
+
+    function abrirMesa() {
+        document.getElementById("formMesa").hidden = false;
+        document.getElementById("labelHoraAbertura").hidden = true;
+        document.getElementById("inputHoraAbertura").hidden = true;
+    }
+    
+    function reservarMesa() {
+        document.getElementById("formMesa").hidden = false;
+        document.getElementById("labelHoraAbertura").hidden = false;
+        document.getElementById("inputHoraAbertura").hidden = false;
+    }
+
+</script>

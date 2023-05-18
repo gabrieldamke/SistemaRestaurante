@@ -123,6 +123,11 @@ public class MesaController : ApiBaseController
         return Ok(mesaDeletada);
     }
 
+    /// <summary>
+    /// Abre uma mesa para torná-la ocupada
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id}/open", Name = "OpenMesa")]
     [ProducesResponseType(typeof(Mesa), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -141,15 +146,21 @@ public class MesaController : ApiBaseController
         }
 
         mesa.Status = StatusMesa.Ocupada;
+        mesa.HoraAbertura = DateTime.Now;
         var mesaAtualizada = await _mesaEntityRepository.UpdateAsync(mesa);
         return Ok(mesaAtualizada);
     }
 
+    /// <summary>
+    /// Reserva uma mesa para torná-la reservada
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id}/reserve", Name = "ReserveMesa")]
     [ProducesResponseType(typeof(Mesa), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Reserve(int id)
+    public async Task<IActionResult> Reserve(int id, DateTime horaReserva)
     {
         var mesa = await _mesaEntityRepository.GetByIdAsync(id);
         if (mesa == null)
@@ -163,10 +174,16 @@ public class MesaController : ApiBaseController
         }
 
         mesa.Status = StatusMesa.Reservada;
+        mesa.HoraAbertura = horaReserva;
         var mesaAtualizada = await _mesaEntityRepository.UpdateAsync(mesa);
         return Ok(mesaAtualizada);
     }
 
+    /// <summary>
+    /// Fecha a mesa para torná-la livre
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id}/close", Name = "CloseMesa")]
     [ProducesResponseType(typeof(Mesa), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -185,6 +202,7 @@ public class MesaController : ApiBaseController
         }
 
         mesa.Status = StatusMesa.Livre;
+        mesa.HoraAbertura = null;
         var mesaAtualizada = await _mesaEntityRepository.UpdateAsync(mesa);
         return Ok(mesaAtualizada);
     }

@@ -18,6 +18,12 @@ builder.Services.AddSwagger();
 builder.Services.AddVersioning();
 builder.Services.AddApiProblemDetails();
 builder.Services.RegisterServices(builder.Configuration);
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(cors =>
+        cors
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin()));
 
 var app = builder.Build();
 
@@ -27,7 +33,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
 
