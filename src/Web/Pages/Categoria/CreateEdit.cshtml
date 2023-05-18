@@ -9,30 +9,32 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <form method="post">
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div class="form-group">
+                <input hidden="hidden" asp-for="Categoria.Id" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria.Nome" class="form-label"></label>
+                <input asp-for="Categoria.Nome" class="form-control"/>
+                <span asp-validation-for="Categoria.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria.Descricao" class="form-label"></label>
+                <input asp-for="Categoria.Descricao" class="form-control"/>
+                <span asp-validation-for="Categoria.Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4">
+                <input type="submit" value="Salvar" class="btn btn-primary"/>
+            </div>
+        </form>
+
         <div>
-            <input hidden="hidden" asp-for="Categoria.Id"/>
+            @foreach (var error in Model.Errors)
+            {
+                <p class="text-danger">@error</p>
+            }
         </div>
-        <div>
-            <label asp-for="Categoria.Nome"></label>
-            <input asp-for="Categoria.Nome"/>
-            <span asp-validation-for="Categoria.Nome"></span>
-        </div>
-        <div>
-            <label asp-for="Categoria.Descricao"></label>
-            <input asp-for="Categoria.Descricao"/>
-            <span asp-validation-for="Categoria.Descricao"></span>
-        </div>
-       <div>
-            <input type="submit" value="Salvar"/>
-        </div>
-    </form>
-    
-    <div>
-        @foreach (var error in Model.Errors)
-        {
-            <p class="text-danger">@error</p>
-        }
     </div>
 </div>

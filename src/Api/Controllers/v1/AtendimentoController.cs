@@ -17,13 +17,55 @@ public class AtendimentoController : ApiBaseController
     private readonly IEntityRepository<Produto> _produtoEntityRepository;
     private readonly IEntityRepository<AtendimentoProduto> _atendimentoProdutoEntityRepository;
 
-    public AtendimentoController(IEntityRepository<Atendimento> atendimentoEntityRepository,
+    public AtendimentoController(
+        IEntityRepository<Atendimento> atendimentoEntityRepository,
         IEntityRepository<Produto> produtoEntityRepository,
-        IEntityRepository<AtendimentoProduto> atendimentoProdutoEntityRepository)
+        IEntityRepository<AtendimentoProduto> atendimentoProdutoEntityRepository
+    )
     {
         _atendimentoEntityRepository = atendimentoEntityRepository;
         _produtoEntityRepository = produtoEntityRepository;
         _atendimentoProdutoEntityRepository = atendimentoProdutoEntityRepository;
+    }
+
+    /// <summary>
+    /// Obtém o total de produtos vendidos
+    /// </summary>
+    [HttpGet("TotalProductsSold")]
+    public async Task<ActionResult<List<object>>> GetTotalProductsSold()
+    {
+        var productsSold = await _atendimentoProdutoEntityRepository.GetQueryable()
+            .AsNoTracking()
+            .GroupBy(ap => ap.Produto.Nome)
+            .Select(group => new
+            {
+                ProductName = group.Key,
+                QuantitySold = group.Sum(ap => ap.Quantidade)
+            })
+            .ToListAsync<object>();
+
+        return Ok(productsSold);
+    }
+
+    /// <summary>
+    /// Obtém o total por categoria
+    /// </summary>
+    [HttpGet("TotalProductsSoldByCategory")]
+    public async Task<ActionResult<List<object>>> GetTotalProductsSoldByCategory()
+    {
+        var productsSold = await _atendimentoProdutoEntityRepository.GetQueryable()
+            .AsNoTracking()
+            .Include(i => i.Produto)
+            .ThenInclude(ti => ti.Categoria)
+            .GroupBy(ap => ap.Produto.Categoria.Nome)
+            .Select(group => new
+            {
+                CategoryName = group.Key,
+                QuantitySold = group.Sum(ap => ap.Quantidade)
+            })
+            .ToListAsync<object>();
+
+        return Ok(productsSold);
     }
 
     /// <summary>
@@ -37,10 +79,17 @@ public class AtendimentoController : ApiBaseController
     [ProducesResponseType(typeof(PaginatedList<Atendimento>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
+    public async Task<IActionResult> GetAllPaginated(
+        int pageIndex = 1,
+        int pageSize = 10,
+        bool includeAll = false
+    )
     {
-        var atendimentos =
-            await _atendimentoEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
+        var atendimentos = await _atendimentoEntityRepository.GetPaginatedListAsync(
+            pageIndex,
+            pageSize,
+            includeAll: includeAll
+        );
         return Ok(atendimentos);
     }
 
@@ -55,12 +104,16 @@ public class AtendimentoController : ApiBaseController
     [ProducesResponseType(typeof(IEnumerable<Atendimento>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered([FromQuery] int? mesaId, [FromQuery] int? garcomId,
-        bool includeAll = false)
+    public async Task<IActionResult> GetAllFiltered(
+        [FromQuery] int? mesaId,
+        [FromQuery] int? garcomId,
+        bool includeAll = false
+    )
     {
-        var atendimentos =
-            await _atendimentoEntityRepository.GetAllAsync(x => x.MesaId == mesaId && x.GarcomId == garcomId,
-                includeAll: includeAll);
+        var atendimentos = await _atendimentoEntityRepository.GetAllAsync(
+            x => x.MesaId == mesaId && x.GarcomId == garcomId,
+            includeAll: includeAll
+        );
         return Ok(atendimentos);
     }
 
@@ -97,7 +150,11 @@ public class AtendimentoController : ApiBaseController
     public async Task<IActionResult> Create([FromBody] Atendimento atendimento)
     {
         var atendimentoCriado = await _atendimentoEntityRepository.AddAsync(atendimento);
-        return CreatedAtAction(nameof(GetById), new { id = atendimentoCriado.Id }, atendimentoCriado);
+        return CreatedAtAction(
+            nameof(GetById),
+            new { id = atendimentoCriado.Id },
+            atendimentoCriado
+        );
     }
 
     /// <summary>
@@ -227,7 +284,8 @@ public class AtendimentoController : ApiBaseController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RemoveProduto(int id, int produtoId)
     {
-        var atendimentoProduto = await _atendimentoProdutoEntityRepository.GetQueryable()
+        var atendimentoProduto = await _atendimentoProdutoEntityRepository
+            .GetQueryable()
             .AsNoTracking()
             .Where(x => x.AtendimentoId == id && x.ProdutoId == produtoId)
             .FirstOrDefaultAsync();
@@ -237,7 +295,9 @@ public class AtendimentoController : ApiBaseController
             return NotFound();
         }
 
-        var atendimentoProdutoDeletado = await _atendimentoProdutoEntityRepository.DeleteAsync(atendimentoProduto.Id);
+        var atendimentoProdutoDeletado = await _atendimentoProdutoEntityRepository.DeleteAsync(
+            atendimentoProduto.Id
+        );
         return Ok(atendimentoProdutoDeletado);
     }
 }

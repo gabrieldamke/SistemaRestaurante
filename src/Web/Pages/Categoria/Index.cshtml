@@ -8,41 +8,46 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-primary" asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
 </div>
 
-@if (Model.Categorias is not null)
+@if (Model.Categorias is not null && Model.Categorias.Any())
 {
-    <table>
-        <thead>
-        <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th></th>
-        </tr>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var Categoria in Model.Categorias)
-        {
-            <tr>
-                <td>@Categoria.Id</td>
-                <td>@Categoria.Nome</td>
-                <td>@Categoria.Descricao</td>
-                <td>
-                    <a asp-page="Details" asp-route-id="@Categoria.Id">Detalhes</a> |
-                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Categoria.Id">Editar</a> |
-                    <a asp-page="Delete" asp-route-id="@Categoria.Id">Excluir</a>
-                </td>
-            </tr>
-        }
+            @foreach (var categoria in Model.Categorias)
+            {
+                <tr>
+                    <td>@categoria.Id</td>
+                    <td>@categoria.Nome</td>
+                    <td>@categoria.Descricao</td>
+                    <td>
+                        <div class="float-left">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-sm btn-info" asp-page="Details" asp-route-id="@categoria.Id">Detalhes</a>
+                                <a class="btn btn-sm btn-primary" asp-page="CreateEdit" asp-page-handler="Edit"
+                                    asp-route-id="@categoria.Id">Editar</a>
+                                <a class="btn btn-sm btn-danger" asp-page="Delete" asp-route-id="@categoria.Id">Excluir</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
-    
+
     @await Html.PartialAsync("_Pagination", Model.PageViewModel)
 }
 else
 {
-    <p>Nenhuma categoria cadastrada.</p>
+    <p class="text-muted">Nenhuma categoria cadastrada.</p>
 }

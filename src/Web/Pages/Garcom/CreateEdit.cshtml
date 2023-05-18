@@ -9,28 +9,28 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
+<div class="container">
     <form method="post">
-        <div>
-            <input hidden="hidden" asp-for="Garcom.Id"/>
+        <div class="form-group">
+            <input hidden="hidden" asp-for="Garcom.Id" class="form-control" />
         </div>
-        <div>
-            <label asp-for="Garcom.Nome"></label>
-            <input asp-for="Garcom.Nome"/>
-            <span asp-validation-for="Garcom.Nome"></span>
+        <div class="form-group">
+            <label asp-for="Garcom.Nome" class="control-label"></label>
+            <input asp-for="Garcom.Nome" class="form-control" />
+            <span asp-validation-for="Garcom.Nome" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Garcom.Sobrenome"></label>
-            <input asp-for="Garcom.Sobrenome"/>
-            <span asp-validation-for="Garcom.Sobrenome"></span>
+        <div class="form-group">
+            <label asp-for="Garcom.Sobrenome" class="control-label"></label>
+            <input asp-for="Garcom.Sobrenome" class="form-control" />
+            <span asp-validation-for="Garcom.Sobrenome" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Garcom.NumeroTelefone"></label>
-            <input asp-for="Garcom.NumeroTelefone"/>
-            <span asp-validation-for="Garcom.NumeroTelefone"></span>
+        <div class="form-group">
+            <label asp-for="Garcom.NumeroTelefone" class="control-label"></label>
+            <input asp-for="Garcom.NumeroTelefone" class="form-control" />
+            <span asp-validation-for="Garcom.NumeroTelefone" class="text-danger"></span>
         </div>
-        <div>
-            <input type="submit" value="Salvar"/>
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
     

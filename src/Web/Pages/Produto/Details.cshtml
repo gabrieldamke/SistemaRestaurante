@@ -6,58 +6,60 @@
     ViewData["Title"] = "Detalhes";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="mb-4">@ViewData["Title"]</h2>
 
-<div>
-    <h4>Produto</h4>
-    <hr/>
-    
-    @if (Model.Produto is not null)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                <label asp-for="Produto.Id"></label>
-            </dt>
-            <dd>
-                @Model.Produto.Id
-            </dd>
-            <dt>
-                <label asp-for="Produto.Nome"></label>
-            </dt>
-            <dd>
-                @Model.Produto.Nome
-            </dd>
-            <dt>
-                <label asp-for="Produto.Descricao"></label>
-            </dt>
-            <dd>
-                @Model.Produto.Descricao
-            </dd>
-            <dt>
-                <label asp-for="Produto.Preco"></label>
-            </dt>
-            <dd>
-                @Model.Produto.Preco
-            </dd>
-            <dt>
-                <label asp-for="Produto.Categoria"></label>
-            </dt>
-            <dd>
-                @Model.Produto.Categoria?.Nome
-            </dd>
-        </dl>
-    }
-    else
-    {
-        <p>Nenhum produto encontrado.</p>
-    }
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Produto</h4>
+        <hr class="my-4"/>
+
+        @if (Model.Produto is not null)
+        {
+            <dl class="row">
+                <dt class="col-sm-3">
+                    <label asp-for="Produto.Id" class="form-label">ID:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Produto.Id
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Produto.Nome" class="form-label">Nome:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Produto.Nome
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Produto.Descricao" class="form-label">Descrição:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Produto.Descricao
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Produto.Preco" class="form-label">Preço:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Produto.Preco
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Produto.Categoria" class="form-label">Categoria:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Produto.Categoria?.Nome
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <p>Nenhum produto encontrado.</p>
+        }
+    </div>
 </div>
 
-<div>
+<div class="mb-4">
     @if (Model.Produto is not null)
     {
-        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Produto.Id">Editar</a>
-        <a asp-page="Delete" asp-route-id="@Model.Produto.Id">Excluir</a>
+        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Produto.Id" class="btn btn-primary me-2">Editar</a>
+        <a asp-page="Delete" asp-route-id="@Model.Produto.Id" class="btn btn-danger me-2">Excluir</a>
     }
-    <a asp-page="Index">Voltar</a>
+    <a asp-page="Index" class="btn btn-secondary">Voltar</a>
 </div>

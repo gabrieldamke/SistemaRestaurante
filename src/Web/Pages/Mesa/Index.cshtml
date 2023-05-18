@@ -8,43 +8,48 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-primary" asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
 </div>
 
-@if (Model.Mesas is not null)
+@if (Model.Mesas is not null && Model.Mesas.Any())
 {
-    <table>
-        <thead>
-        <tr>
-            <th>Código</th>
-            <th>Número</th>
-            <th>Situação</th>
-            <th>Hora de abertura</th>
-            <th></th>
-        </tr>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Número</th>
+                <th scope="col">Situação</th>
+                <th scope="col">Hora de abertura</th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var mesa in Model.Mesas)
-        {
-            <tr>
-                <td>@mesa.Id</td>
-                <td>@mesa.Numero</td>
-                <td>@mesa.Status</td>
-                <td>@mesa.HoraAbertura</td>
-                <td>
-                    <a asp-page="Details" asp-route-id="@mesa.Id">Detalhes</a> |
-                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@mesa.Id">Editar</a> |
-                    <a asp-page="Delete" asp-route-id="@mesa.Id">Excluir</a>
-                </td>
-            </tr>
-        }
+            @foreach (var mesa in Model.Mesas)
+            {
+                <tr>
+                    <td>@mesa.Id</td>
+                    <td>@mesa.Numero</td>
+                    <td>@mesa.Status</td>
+                    <td>@mesa.HoraAbertura</td>
+                    <td>
+                        <div class="float-left">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-sm btn-info" asp-page="Details" asp-route-id="@mesa.Id">Detalhes</a>
+                                <a class="btn btn-sm btn-primary" asp-page="CreateEdit" asp-page-handler="Edit"
+                                    asp-route-id="@mesa.Id">Editar</a>
+                                <a class="btn btn-sm btn-danger" asp-page="Delete" asp-route-id="@mesa.Id">Excluir</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
-    
+
     @await Html.PartialAsync("_Pagination", Model.PageViewModel)
 }
 else
 {
-    <p>Nenhuma mesa cadastrada.</p>
+    <p class="text-muted">Nenhuma mesa cadastrada.</p>
 }
