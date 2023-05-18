@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
             .AllowAnyOrigin()));
 
 var app = builder.Build();
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 app.UseProblemDetails();

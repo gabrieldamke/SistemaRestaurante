@@ -8,21 +8,21 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-primary" asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
 </div>
 
-@if (Model.Produtos is not null)
+@if (Model.Produtos is not null && Model.Produtos.Any())
 {
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="thead-light">
         <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Categoria</th>
-            <th></th>
+            <th scope="col">Código</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Categoria</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -35,9 +35,11 @@
                 <td>@produto.Preco</td>
                 <td>@produto.Categoria?.Nome</td>
                 <td>
-                    <a asp-page="Details" asp-route-id="@produto.Id">Detalhes</a> |
-                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@produto.Id">Editar</a> |
-                    <a asp-page="Delete" asp-route-id="@produto.Id">Excluir</a>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-sm btn-info" asp-page="Details" asp-route-id="@produto.Id">Detalhes</a>
+                        <a class="btn btn-sm btn-primary" asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@produto.Id">Editar</a>
+                        <a class="btn btn-sm btn-danger" asp-page="Delete" asp-route-id="@produto.Id">Excluir</a>
+                    </div>
                 </td>
             </tr>
         }
@@ -48,5 +50,5 @@
 }
 else
 {
-    <p>Nenhum produto cadastrado.</p>
+    <p class="text-muted">Nenhum produto cadastrado.</p>
 }

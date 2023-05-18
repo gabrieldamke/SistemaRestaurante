@@ -7,108 +7,116 @@
     ViewData["Title"] = "Detalhes";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="mb-4">@ViewData["Title"]</h2>
 
-<div>
-    <h4>Mesa</h4>
-    <hr/>
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Mesa</h4>
+        <hr class="my-4"/>
 
-    @if (Model.Mesa is not null)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                <label asp-for="Mesa.Id"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Id
-            </dd>
-            <dt>
-                <label asp-for="Mesa.Numero"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Numero
-            </dd>
-            <dt>
-                <label asp-for="Mesa.HoraAbertura"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.HoraAbertura
-            </dd>
-            <dt>
-                <label asp-for="Mesa.Status"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Status
-            </dd>
-        </dl>
-
-        @if (Model.Mesa.Status == MesaStatus.Livre)
+        @if (Model.Mesa is not null)
         {
-            <button onclick="abrirMesa()">Abrir Mesa</button>
-            <button onclick="reservarMesa()">Reservar Mesa</button>
-            
-            <form id="formMesa" hidden="hidden" method="post">
-                <div>
-                    <input hidden="hidden" asp-for="Mesa.Id"/>
-                </div>
-                <div>
-                    <label id="labelHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"></label>
-                    <input id="inputHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"/>
-                    <span asp-validation-for="Mesa.HoraAbertura"></span>
-                </div>
+            <dl class="row">
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.Id" class="form-label">ID:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.Id
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.Numero" class="form-label">Número:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.Numero
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.HoraAbertura" class="form-label">Hora de Abertura:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.HoraAbertura
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.Status" class="form-label">Status:</label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.Status
+                </dd>
+            </dl>
 
-                <div>
-                    <input type="submit" value="Enviar"/>
-                </div>
-            </form>
-        }
+            @if (Model.Mesa.Status == MesaStatus.Livre)
+            {
+                <button onclick="abrirMesa()">Abrir Mesa</button>
+                <button onclick="reservarMesa()">Reservar Mesa</button>
 
-        <hr/>
+                <form id="formMesa" hidden="hidden" method="post">
+                    <div>
+                        <input hidden="hidden" asp-for="Mesa.Id"/>
+                    </div>
+                    <div>
+                        <label id="labelHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"></label>
+                        <input id="inputHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"/>
+                        <span asp-validation-for="Mesa.HoraAbertura"></span>
+                    </div>
 
-        @if (Model.Mesa.Atendimentos is not null)
-        {
-            <h4>Atendimentos</h4>
+                    <div>
+                        <input type="submit" value="Enviar"/>
+                    </div>
+                </form>
+            }
 
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Hora de Abertura</th>
-                    <th>Hora de Fechamento</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var atendimento in Model.Mesa.Atendimentos)
-                {
+            <hr class="my-4"/>
+
+            @if (Model.Mesa.Atendimentos is not null)
+            {
+                <h4>Atendimentos</h4>
+
+                <table class="table table-striped table-hover">
+                    <thead>
                     <tr>
-                        <td>@atendimento.Id</td>
-                        <td>@atendimento.HoraAbertura</td>
-                        <td>@atendimento.HoraFechamento</td>
-                        <td>
-                            <a asp-page="Details" asp-route-id="@atendimento.Id">Detalhes</a> |
-                            <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id">Editar</a> |
-                            <a asp-page="Delete" asp-route-id="@atendimento.Id">Excluir</a>
-                        </td>
+                        <th scope="col">Código</th>
+                        <th scope="col">Hora de Abertura</th>
+                        <th scope="col">Hora de Fechamento</th>
+                        <th scope="col"></th>
                     </tr>
-                }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach (var atendimento in Model.Mesa.Atendimentos)
+                    {
+                        <tr>
+                            <td>@atendimento.Id</td>
+                            <td>@atendimento.HoraAbertura</td>
+                            <td>@atendimento.HoraFechamento</td>
+                            <td>
+                                <a asp-page="Details" asp-route-id="@atendimento.Id" class="btn btn-sm btn-info">Detalhes</a>
+                                <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id"
+                                   class="btn btn-sm btn-warning">
+                                    Editar
+                                </a>
+                                <a asp-page="Delete" asp-route-id="@atendimento.Id" class="btn btn-sm btn-danger">Excluir</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
         }
-    }
-    else
-    {
-        <p>Nenhuma mesa encontrada.</p>
-    }
+        else
+        {
+            <p>Nenhuma mesa encontrada.</p>
+        }
+    </div>
 </div>
 
-<div>
+<div class="mb-4">
     @if (Model.Mesa is not null)
     {
-        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Mesa.Id">Editar</a>
-        <a asp-page="Delete" asp-route-id="@Model.Mesa.Id">Excluir</a>
+        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Mesa.Id"
+           class="btn btn-primary me-2">
+            Editar
+        </a>
+        <a asp-page="Delete" asp-route-id="@Model.Mesa.Id" class="btn btn-danger me-2">Excluir</a>
     }
-    <a asp-page="Index">Voltar</a>
+    <a asp-page="Index" class="btn btn-secondary">Voltar</a>
 </div>
 
 <script>

@@ -12,10 +12,39 @@ namespace Api.Controllers.v1;
 public class GarcomController : ApiBaseController
 {
     private readonly IEntityRepository<Garcom> _garcomEntityRepository;
+    private readonly IEntityRepository<Atendimento> _atendimentoEntityRepository;
 
-    public GarcomController(IEntityRepository<Garcom> garcomEntityRepository)
+    public GarcomController(
+        IEntityRepository<Garcom> garcomEntityRepository,
+        IEntityRepository<Atendimento> atendimentoEntityRepository
+    )
     {
         _garcomEntityRepository = garcomEntityRepository;
+        _atendimentoEntityRepository = atendimentoEntityRepository;
+    }
+
+    /// <summary>
+    /// Retorna as vendas por garçom
+    /// </summary
+    [HttpGet("SalesByGarcom")]
+    public async Task<ActionResult<List<object>>> GetSalesByGarcom()
+    {
+        var atendimentos = await _atendimentoEntityRepository.GetAllAsync();
+        var garcons = await _garcomEntityRepository.GetAllAsync();
+
+        var salesByGarcom = garcons.Select(
+            garcom =>
+                new
+                {
+                    garcom = $"{garcom.Nome} {garcom.Sobrenome}",
+                    total_sales = atendimentos
+                        .Where(atendimento => atendimento.GarcomId == garcom.Id)
+                        .SelectMany(atendimento => atendimento.Produtos)
+                        .Sum(atendimentoProduto => atendimentoProduto.Preco)
+                }
+        );
+
+        return Ok(salesByGarcom.ToList<object>());
     }
 
     /// <summary>
@@ -29,9 +58,17 @@ public class GarcomController : ApiBaseController
     [ProducesResponseType(typeof(PaginatedList<Garcom>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
+    public async Task<IActionResult> GetAllPaginated(
+        int pageIndex = 1,
+        int pageSize = 10,
+        bool includeAll = false
+    )
     {
-        var garcons = await _garcomEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
+        var garcons = await _garcomEntityRepository.GetPaginatedListAsync(
+            pageIndex,
+            pageSize,
+            includeAll: includeAll
+        );
         return Ok(garcons);
     }
 
@@ -45,11 +82,15 @@ public class GarcomController : ApiBaseController
     [ProducesResponseType(typeof(IEnumerable<Garcom>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered([FromQuery] string? name, bool includeAll = false)
+    public async Task<IActionResult> GetAllFiltered(
+        [FromQuery] string? name,
+        bool includeAll = false
+    )
     {
-        var garcons =
-            await _garcomEntityRepository.GetAllAsync(x => x.Nome.Contains(name ?? string.Empty),
-                includeAll: includeAll);
+        var garcons = await _garcomEntityRepository.GetAllAsync(
+            x => x.Nome.Contains(name ?? string.Empty),
+            includeAll: includeAll
+        );
         return Ok(garcons);
     }
 

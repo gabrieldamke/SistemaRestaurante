@@ -4,7 +4,188 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-200">
+    <div class="container mx-auto my-4 px-4">
+        <h2 class="text-xl font-weight-bold mb-4">Resumo de Vendas</h2>
+        <div class="row">
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-weight-bold mb-2">Vendas por Garçom</h3>
+                    <canvas id="chart1"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-weight-bold mb-2">Vendas por Mesa</h3>
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+        </div>
+        <h2 class="text-xl font-weight-bold my-8">Levantamento de Quantidades Vendidas</h2>
+        <div class="row">
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-weight-bold mb-2">Quantidade de produtos Vendidos</h3>
+                    <canvas id="chart3"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 mb-4">
+                <div class="bg-white shadow rounded-lg p-4">
+                    <h3 class="text-lg font-weight-bold mb-2">Categorias Vendidas</h3>
+                    <canvas id="chart4"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    fetch("https://localhost:5001/api/v1/Garcom/SalesByGarcom")
+        .then(response => response.json())
+        .then(data => {
+            const garcons = data.map(obj => obj.garcom);
+            const sales = data.map(obj => obj.total_sales);
+
+            const chartData = {
+                labels: garcons,
+                datasets: [{
+                    label: 'Vendas por Garçom',
+                    data: sales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const chartOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            const ctx = document.querySelector("#chart1").getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+        })
+        .catch(error => {
+            console.log("Error: " + error);
+        });
+
+    fetch("https://localhost:5001/api/v1/Mesa/SalesByMesa")
+        .then(response => response.json())
+        .then(data => {
+            const mesas = data.map(obj => obj.mesaId);
+            const sales = data.map(obj => obj.total_sales);
+
+            const chartData = {
+                labels: mesas,
+                datasets: [{
+                    label: 'Vendas por Mesa',
+                    data: sales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const chartOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            const ctx = document.querySelector("#chart2").getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+        })
+        .catch(error => {
+            console.log("Error: " + error);
+        });
+    fetch("https://localhost:5001/api/v1/Atendimento/TotalProductsSold")
+        .then(response => response.json())
+        .then(data => {
+            const ProductName = data.map(obj => obj.productName);
+            const sales = data.map(obj => obj.quantitySold);
+
+            const chartData = {
+                labels: ProductName,
+                datasets: [{
+                    label: 'Vendas por produto',
+                    data: sales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const chartOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            const ctx = document.querySelector("#chart3").getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+        })
+        .catch(error => {
+            console.log("Error: " + error);
+        });
+    fetch("https://localhost:5001/api/v1/Atendimento/TotalProductsSoldByCategory")
+        .then(response => response.json())
+        .then(data => {
+            const ProductName = data.map(obj => obj.categoryName);
+            const sales = data.map(obj => obj.quantitySold);
+
+            const chartData = {
+                labels: ProductName,
+                datasets: [{
+                    label: 'Vendas por Categoria',
+                    data: sales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const chartOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            const ctx = document.querySelector("#chart4").getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+        })
+        .catch(error => {
+            console.log("Error: " + error);
+        });
+</script>

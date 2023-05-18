@@ -2,62 +2,62 @@
 @model Web.Pages.Atendimento.Details
 
 @{
-    Layout = "_Layout";
-    ViewData["Title"] = "Detalhes";
+Layout = "_Layout";
+ViewData["Title"] = "Detalhes";
 }
 
 <h2>@ViewData["Title"]</h2>
-
-<div>
-    <h4>Atendimento</h4>
-    <hr/>
-    
-    @if (Model.Atendimento is not null)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                <label asp-for="Atendimento.Id"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.Id
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.HoraAbertura"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.HoraAbertura
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.HoraFechamento"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.HoraFechamento
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.Mesa"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.Mesa.Numero
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.Garcom"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.Garcom.Nome
-            </dd>
-        </dl>
-    }
-    else
-    {
-        <p>Nenhum atendimento encontrado.</p>
-    }
-</div>
-
-<div>
-    @if (Model.Atendimento is not null)
-    {
-        <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Atendimento.Id">Editar</a>
-        <a asp-page="Delete" asp-route-id="@Model.Atendimento.Id">Excluir</a>
-    }
-    <a asp-page="Index">Voltar</a>
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Atendimento</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Atendimento is not null)
+        {
+            <dl class="row">
+                <dt class="col-sm-4">
+                    <label asp-for="Atendimento.Id" class="form-label">ID:</label>
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Atendimento.Id
+                </dd>
+                <dt class="col-sm-4">
+                    <label asp-for="Atendimento.HoraAbertura" class="form-label">Hora de Abertura:</label>
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Atendimento.HoraAbertura
+                </dd>
+                <dt class="col-sm-4">
+                    <label asp-for="Atendimento.HoraFechamento" class="form-label">Hora de Fechamento:</label>
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Atendimento.HoraFechamento
+                </dd>
+                <dt class="col-sm-4">
+                    <label asp-for="Atendimento.Mesa" class="form-label">Mesa:</label>
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Atendimento.Mesa.Numero
+                </dd>
+                <dt class="col-sm-4">
+                    <label asp-for="Atendimento.Garcom" class="form-label">Garçom:</label>
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Atendimento.Garcom.Nome
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <p>Nenhum atendimento encontrado.</p>
+        }
+    </div>
+    <div class="card-footer">
+        @if (Model.Atendimento is not null)
+        {
+            <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Atendimento.Id" class="btn btn-primary">Editar</a>
+            <a asp-page="Delete" asp-route-id="@Model.Atendimento.Id" class="btn btn-danger">Excluir</a>
+        }
+        <a asp-page="Index" class="btn btn-secondary">Voltar</a>
+    </div>
 </div>

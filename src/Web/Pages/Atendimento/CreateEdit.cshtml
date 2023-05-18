@@ -9,37 +9,37 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
+<div class="container mt-5">
     <form method="post">
-        <div>
+        <div class="form-group">
             <input hidden="hidden" asp-for="Atendimento.Id"/>
         </div>
-        <div>
-            <label asp-for="Atendimento.HoraAbertura"></label>
-            <input asp-for="Atendimento.HoraAbertura"/>
-            <span asp-validation-for="Atendimento.HoraAbertura"></span>
+        <div class="form-group">
+            <label asp-for="Atendimento.HoraAbertura" class="form-label">Hora de Abertura:</label>
+            <input asp-for="Atendimento.HoraAbertura" class="form-control" />
+            <span asp-validation-for="Atendimento.HoraAbertura" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Atendimento.HoraFechamento"></label>
-            <input asp-for="Atendimento.HoraFechamento"/>
-            <span asp-validation-for="Atendimento.HoraFechamento"></span>
+        <div class="form-group">
+            <label asp-for="Atendimento.HoraFechamento" class="form-label">Hora de Fechamento:</label>
+            <input asp-for="Atendimento.HoraFechamento" class="form-control" />
+            <span asp-validation-for="Atendimento.HoraFechamento" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Atendimento.MesaId"></label>
-            <select asp-for="Atendimento.MesaId" asp-items="Model.Mesas"></select>
-            <span asp-validation-for="Atendimento.MesaId"></span>
+        <div class="form-group">
+            <label asp-for="Atendimento.MesaId" class="form-label">Mesa:</label>
+            <select asp-for="Atendimento.MesaId" asp-items="Model.Mesas" class="form-control"></select>
+            <span asp-validation-for="Atendimento.MesaId" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Atendimento.GarcomId"></label>
-            <select asp-for="Atendimento.GarcomId" asp-items="Model.Garcons"></select>
-            <span asp-validation-for="Atendimento.GarcomId"></span>
+        <div class="form-group">
+            <label asp-for="Atendimento.GarcomId" class="form-label">Garçom:</label>
+            <select asp-for="Atendimento.GarcomId" asp-items="Model.Garcons" class="form-control"></select>
+            <span asp-validation-for="Atendimento.GarcomId" class="text-danger"></span>
         </div>
-        <div>
-            <input type="submit" value="Salvar"/>
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
 
-    <div>
+    <div class="mt-3">
         @foreach (var error in Model.Errors)
         {
             <p class="text-danger">@error</p>
