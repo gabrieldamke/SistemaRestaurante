@@ -47,7 +47,7 @@ public static class SwaggerSetup
 
             options.RoutePrefix = "swagger";
 
-            options.DocExpansion(DocExpansion.List);
+            options.DocExpansion(DocExpansion.None);
         });
     }
 }

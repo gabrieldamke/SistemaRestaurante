@@ -1,4 +1,5 @@
-﻿@page "{id:int}"
+﻿@page "{id:int?}"
+@using Web.ApiClient
 @model Web.Pages.Mesa.Details
 
 @{
@@ -11,7 +12,7 @@
 <div class="card mb-4">
     <div class="card-body">
         <h4 class="card-title">Mesa</h4>
-        <hr class="my-4" />
+        <hr class="my-4"/>
 
         @if (Model.Mesa is not null)
         {
@@ -42,7 +43,28 @@
                 </dd>
             </dl>
 
-            <hr class="my-4" />
+            @if (Model.Mesa.Status == MesaStatus.Livre)
+            {
+                <button onclick="abrirMesa()">Abrir Mesa</button>
+                <button onclick="reservarMesa()">Reservar Mesa</button>
+
+                <form id="formMesa" hidden="hidden" method="post">
+                    <div>
+                        <input hidden="hidden" asp-for="Mesa.Id"/>
+                    </div>
+                    <div>
+                        <label id="labelHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"></label>
+                        <input id="inputHoraAbertura" hidden="hidden" asp-for="Mesa.HoraAbertura"/>
+                        <span asp-validation-for="Mesa.HoraAbertura"></span>
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Enviar"/>
+                    </div>
+                </form>
+            }
+
+            <hr class="my-4"/>
 
             @if (Model.Mesa.Atendimentos is not null)
             {
@@ -50,28 +72,30 @@
 
                 <table class="table table-striped table-hover">
                     <thead>
-                        <tr>
-                            <th scope="col">Código</th>
-                            <th scope="col">Hora de Abertura</th>
-                            <th scope="col">Hora de Fechamento</th>
-                            <th scope="col"></th>
-                        </tr>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Hora de Abertura</th>
+                        <th scope="col">Hora de Fechamento</th>
+                        <th scope="col"></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var atendimento in Model.Mesa.Atendimentos)
-                        {
-                            <tr>
-                                <td>@atendimento.Id</td>
-                                <td>@atendimento.HoraAbertura</td>
-                                <td>@atendimento.HoraFechamento</td>
-                                <td>
-                                    <a asp-page="Details" asp-route-id="@atendimento.Id" class="btn btn-sm btn-info">Detalhes</a>
-                                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id"
-                                        class="btn btn-sm btn-warning">Editar</a>
-                                    <a asp-page="Delete" asp-route-id="@atendimento.Id" class="btn btn-sm btn-danger">Excluir</a>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var atendimento in Model.Mesa.Atendimentos)
+                    {
+                        <tr>
+                            <td>@atendimento.Id</td>
+                            <td>@atendimento.HoraAbertura</td>
+                            <td>@atendimento.HoraFechamento</td>
+                            <td>
+                                <a asp-page="Details" asp-route-id="@atendimento.Id" class="btn btn-sm btn-info">Detalhes</a>
+                                <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id"
+                                   class="btn btn-sm btn-warning">
+                                    Editar
+                                </a>
+                                <a asp-page="Delete" asp-route-id="@atendimento.Id" class="btn btn-sm btn-danger">Excluir</a>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             }
@@ -87,8 +111,26 @@
     @if (Model.Mesa is not null)
     {
         <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@Model.Mesa.Id"
-            class="btn btn-primary me-2">Editar</a>
+           class="btn btn-primary me-2">
+            Editar
+        </a>
         <a asp-page="Delete" asp-route-id="@Model.Mesa.Id" class="btn btn-danger me-2">Excluir</a>
     }
     <a asp-page="Index" class="btn btn-secondary">Voltar</a>
 </div>
+
+<script>
+
+    function abrirMesa() {
+        document.getElementById("formMesa").hidden = false;
+        document.getElementById("labelHoraAbertura").hidden = true;
+        document.getElementById("inputHoraAbertura").hidden = true;
+    }
+    
+    function reservarMesa() {
+        document.getElementById("formMesa").hidden = false;
+        document.getElementById("labelHoraAbertura").hidden = false;
+        document.getElementById("inputHoraAbertura").hidden = false;
+    }
+
+</script>
