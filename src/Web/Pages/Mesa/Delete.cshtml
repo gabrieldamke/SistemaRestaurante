@@ -8,59 +8,61 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <h4>Mesa</h4>
-    <hr/>
-
-    @if (Model.Mesa is not null)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                <label asp-for="Mesa.Id"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Id
-            </dd>
-            <dt>
-                <label asp-for="Mesa.Numero"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Numero
-            </dd>
-            <dt>
-                <label asp-for="Mesa.HoraAbertura"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.HoraAbertura
-            </dd>
-            <dt>
-                <label asp-for="Mesa.Status"></label>
-            </dt>
-            <dd>
-                @Model.Mesa.Status
-            </dd>
-        </dl>
-    }
-    else
-    {
-        <p>Nenhuma mesa encontrada.</p>
-    }
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Mesa</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Mesa is not null)
+        {
+            <dl class="row">
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.Id" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.Id
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.Numero" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.Numero
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.HoraAbertura" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.HoraAbertura
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Mesa.Status" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Mesa.Status
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <p>Nenhuma mesa encontrada.</p>
+        }
+    </div>
 </div>
 
-<div>
+<div class="mt-3">
     @foreach (var error in Model.Errors)
     {
         <p class="text-danger">@error</p>
     }
 </div>
 
-<div>
+<div class="mt-3 d-flex align-items-center">
     @if (Model.Mesa is not null)
     {
-        <form method="post">
-            <input type="hidden" asp-for="Mesa.Id"/>
-            <input type="submit" value="Excluir"/>
+        <form method="post" class="mr-2">
+            <input type="hidden" asp-for="Mesa.Id" />
+            <button type="submit" class="btn btn-danger">Excluir</button>
         </form>
     }
-    <a asp-page="Index">Voltar</a>
+    <a asp-page="Index" class="btn btn-secondary">Voltar</a>
 </div>

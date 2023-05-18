@@ -13,10 +13,36 @@ namespace Api.Controllers.v1;
 public class MesaController : ApiBaseController
 {
     private readonly IEntityRepository<Mesa> _mesaEntityRepository;
+    private readonly IEntityRepository<Atendimento> _atendimentoEntityRepository;
 
-    public MesaController(IEntityRepository<Mesa> mesaEntityRepository)
+    public MesaController(IEntityRepository<Mesa> mesaEntityRepository, IEntityRepository<Atendimento> atendimentoEntityRepository)
     {
         _mesaEntityRepository = mesaEntityRepository;
+        _atendimentoEntityRepository = atendimentoEntityRepository;
+    }
+
+    /// <summary>
+    /// Obtém as vendas por Mesa
+    /// </summary>
+    [HttpGet("SalesByMesa")]
+    public async Task<ActionResult<List<object>>> GetSalesByMesa()
+    {
+        var atendimentos = await _atendimentoEntityRepository.GetAllAsync();
+        var mesas = await _mesaEntityRepository.GetAllAsync();
+
+        var salesByMesa = mesas.Select(
+            mesa =>
+                new
+                {
+                    mesaId = mesa.Id,
+                    total_sales = atendimentos
+                        .Where(atendimento => atendimento.MesaId == mesa.Id)
+                        .SelectMany(atendimento => atendimento.Produtos)
+                        .Sum(atendimentoProduto => atendimentoProduto.Preco)
+                }
+        );
+
+        return Ok(salesByMesa.ToList<object>());
     }
 
     /// <summary>
@@ -30,9 +56,17 @@ public class MesaController : ApiBaseController
     [ProducesResponseType(typeof(PaginatedList<Mesa>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllPaginated(int pageIndex = 1, int pageSize = 10, bool includeAll = false)
+    public async Task<IActionResult> GetAllPaginated(
+        int pageIndex = 1,
+        int pageSize = 10,
+        bool includeAll = false
+    )
     {
-        var mesas = await _mesaEntityRepository.GetPaginatedListAsync(pageIndex, pageSize, includeAll: includeAll);
+        var mesas = await _mesaEntityRepository.GetPaginatedListAsync(
+            pageIndex,
+            pageSize,
+            includeAll: includeAll
+        );
         return Ok(mesas);
     }
 
@@ -47,10 +81,16 @@ public class MesaController : ApiBaseController
     [ProducesResponseType(typeof(IEnumerable<Mesa>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAllFiltered(StatusMesa statusMesa, int numero, bool includeAll = false)
+    public async Task<IActionResult> GetAllFiltered(
+        StatusMesa statusMesa,
+        int numero,
+        bool includeAll = false
+    )
     {
-        var mesas = await _mesaEntityRepository.GetAllAsync(x => x.Status == statusMesa && x.Numero == numero,
-            includeAll: includeAll);
+        var mesas = await _mesaEntityRepository.GetAllAsync(
+            x => x.Status == statusMesa && x.Numero == numero,
+            includeAll: includeAll
+        );
         return Ok(mesas);
     }
 

@@ -7,47 +7,53 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-
-<div>
-    <a asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-primary" asp-page="CreateEdit" asp-page-handler="Create">Criar Novo</a>
 </div>
-
-@if (Model.Atendimentos is not null)
+@if (Model.Atendimentos is not null && Model.Atendimentos.Any())
 {
-    <table>
-        <thead>
-        <tr>
-            <th>Código</th>
-            <th>Hora de Abertura</th>
-            <th>Hora de Fechamento</th>
-            <th>Garçom</th>
-            <th>Mesa</th>
-            <th></th>
-        </tr>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Hora de Abertura</th>
+                <th scope="col">Hora de Fechamento</th>
+                <th scope="col">Garçom</th>
+                <th scope="col">Mesa</th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var atendimento in Model.Atendimentos)
-        {
-            <tr>
-                <td>@atendimento.Id</td>
-                <td>@atendimento.HoraAbertura</td>
-                <td>@atendimento.HoraFechamento</td>
-                <td>@atendimento.Garcom?.Nome @atendimento.Garcom?.Sobrenome</td>
-                <td>@atendimento.Mesa!.Numero</td>
-                <td>@atendimento.Mesa.Status</td>
-                <td>
-                    <a asp-page="Details" asp-route-id="@atendimento.Id">Detalhes</a> |
-                    <a asp-page="CreateEdit" asp-page-handler="Edit" asp-route-id="@atendimento.Id">Editar</a> |
-                    <a asp-page="Delete" asp-route-id="@atendimento.Id">Excluir</a>
-                </td>
-            </tr>
-        }
+            @foreach (var atendimento in Model.Atendimentos)
+            {
+                <tr>
+                    <td>@atendimento.Id</td>
+                    <td>@atendimento.HoraAbertura</td>
+                    <td>@atendimento.HoraFechamento</td>
+                    <td>@atendimento.Garcom?.Nome @atendimento.Garcom?.Sobrenome</td>
+                    <td>@atendimento.Mesa!.Numero</td>
+                    <td>@atendimento.Mesa.Status</td>
+                    <td>
+                        <div class="float-left">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-sm btn-info" asp-page="Details" asp-route-id="@atendimento.Id">Detalhes</a>
+                                <a class="btn btn-sm btn-primary" asp-page="CreateEdit" asp-page-handler="Edit"
+                                    asp-route-id="@atendimento.Id">Editar</a>
+                                <a class="btn btn-sm btn-danger" asp-page="Delete" asp-route-id="@atendimento.Id">Excluir</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
-    
     @await Html.PartialAsync("_Pagination", Model.PageViewModel)
 }
 else
 {
-    <p>Nenhum atendimento cadastrado.</p>
+    <p class="text-muted">Nenhum atendimento cadastrado.</p>
 }
+
+
+
+

@@ -8,65 +8,67 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
-    <h4>Atendimento</h4>
-    <hr/>
-
-    @if (Model.Atendimento is not null)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                <label asp-for="Atendimento.Id"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.Id
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.HoraAbertura"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.HoraAbertura
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.HoraFechamento"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.HoraFechamento
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.Mesa"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.Mesa.Numero
-            </dd>
-            <dt>
-                <label asp-for="Atendimento.Garcom"></label>
-            </dt>
-            <dd>
-                @Model.Atendimento.Garcom.Nome
-            </dd>
-        </dl>
-    }
-    else
-    {
-        <p>Nenhum atendimento encontrado.</p>
-    }
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Atendimento</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Atendimento is not null)
+        {
+            <dl class="row">
+                <dt class="col-sm-3">
+                    <label asp-for="Atendimento.Id" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Atendimento.Id
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Atendimento.HoraAbertura" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Atendimento.HoraAbertura
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Atendimento.HoraFechamento" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Atendimento.HoraFechamento
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Atendimento.Mesa" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Atendimento.Mesa.Numero
+                </dd>
+                <dt class="col-sm-3">
+                    <label asp-for="Atendimento.Garcom" class="form-label"></label>
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Atendimento.Garcom.Nome
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <p>Nenhum atendimento encontrado.</p>
+        }
+    </div>
 </div>
 
-<div>
+<div class="mt-3">
     @foreach (var error in Model.Errors)
     {
         <p class="text-danger">@error</p>
     }
 </div>
 
-<div>
+<div class="mt-3 d-flex align-items-center">
     @if (Model.Atendimento is not null)
     {
-        <form method="post">
-            <input type="hidden" asp-for="Atendimento.Id"/>
-            <input type="submit" value="Excluir"/>
+        <form method="post" class="mr-2">
+            <input type="hidden" asp-for="Atendimento.Id" />
+            <button type="submit" class="btn btn-danger">Excluir</button>
         </form>
     }
-    <a asp-page="Index">Voltar</a>
+    <a asp-page="Index" class="btn btn-secondary">Voltar</a>
 </div>

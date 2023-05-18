@@ -9,28 +9,28 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
+<div class="container">
     <form method="post">
-        <div>
-            <input hidden="hidden" asp-for="Mesa.Id"/>
+        <div class="form-group">
+            <input hidden="hidden" asp-for="Mesa.Id" class="form-control" />
         </div>
-        <div>
-            <label asp-for="Mesa.Numero"></label>
-            <input asp-for="Mesa.Numero"/>
-            <span asp-validation-for="Mesa.Numero"></span>
+        <div class="form-group">
+            <label asp-for="Mesa.Numero" class="control-label"></label>
+            <input asp-for="Mesa.Numero" class="form-control" />
+            <span asp-validation-for="Mesa.Numero" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Mesa.HoraAbertura"></label>
-            <input asp-for="Mesa.HoraAbertura"/>
-            <span asp-validation-for="Mesa.HoraAbertura"></span>
+        <div class="form-group">
+            Hora de Abertura
+            <input asp-for="Mesa.HoraAbertura" class="form-control" />
+            <span asp-validation-for="Mesa.HoraAbertura" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Mesa.Status"></label>
-            <select asp-for="Mesa.Status" asp-items="Model.Status"></select>
-            <span asp-validation-for="Mesa.Status"></span>
+        <div class="form-group">
+            <label asp-for="Mesa.Status" class="control-label"></label>
+            <select asp-for="Mesa.Status" asp-items="Model.Status" class="form-control"></select>
+            <span asp-validation-for="Mesa.Status" class="text-danger"></span>
         </div>
-        <div>
-            <input type="submit" value="Salvar"/>
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
     
