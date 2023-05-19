@@ -29,46 +29,6 @@ public class AtendimentoController : ApiBaseController
     }
 
     /// <summary>
-    /// Obtém o total de produtos vendidos
-    /// </summary>
-    [HttpGet("TotalProductsSold")]
-    public async Task<ActionResult<List<object>>> GetTotalProductsSold()
-    {
-        var productsSold = await _atendimentoProdutoEntityRepository.GetQueryable()
-            .AsNoTracking()
-            .GroupBy(ap => ap.Produto.Nome)
-            .Select(group => new
-            {
-                ProductName = group.Key,
-                QuantitySold = group.Sum(ap => ap.Quantidade)
-            })
-            .ToListAsync<object>();
-
-        return Ok(productsSold);
-    }
-
-    /// <summary>
-    /// Obtém o total por categoria
-    /// </summary>
-    [HttpGet("TotalProductsSoldByCategory")]
-    public async Task<ActionResult<List<object>>> GetTotalProductsSoldByCategory()
-    {
-        var productsSold = await _atendimentoProdutoEntityRepository.GetQueryable()
-            .AsNoTracking()
-            .Include(i => i.Produto)
-            .ThenInclude(ti => ti.Categoria)
-            .GroupBy(ap => ap.Produto.Categoria.Nome)
-            .Select(group => new
-            {
-                CategoryName = group.Key,
-                QuantitySold = group.Sum(ap => ap.Quantidade)
-            })
-            .ToListAsync<object>();
-
-        return Ok(productsSold);
-    }
-
-    /// <summary>
     /// Obtém todos os atendimentos de forma paginada
     /// </summary>
     /// <param name="pageIndex"></param>
@@ -113,6 +73,25 @@ public class AtendimentoController : ApiBaseController
         var atendimentos = await _atendimentoEntityRepository.GetAllAsync(
             x => x.MesaId == mesaId && x.GarcomId == garcomId,
             includeAll: includeAll
+        );
+        return Ok(atendimentos);
+    }
+
+    /// <summary>
+    /// Obtém todos os produtos dos atendimentos
+    /// </summary>
+    /// <param name="atendimentoId"></param>
+    /// <returns></returns>
+    [HttpGet("{atendimentoId}/produtos", Name = "GetAllAtendimentosProdutos")]
+    [ProducesResponseType(typeof(IEnumerable<AtendimentoProduto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetAllPaginated(int atendimentoId)
+    {
+        var atendimentos = await _atendimentoProdutoEntityRepository.GetAllAsync(
+            x => x.AtendimentoId == atendimentoId,
+            includeAll: true,
+            orderBy: x => x.OrderBy(a => a.Produto!.Nome)
         );
         return Ok(atendimentos);
     }
@@ -299,5 +278,45 @@ public class AtendimentoController : ApiBaseController
             atendimentoProduto.Id
         );
         return Ok(atendimentoProdutoDeletado);
+    }
+
+    /// <summary>
+    /// Obtém o total de produtos vendidos
+    /// </summary>
+    [HttpGet("TotalProductsSold")]
+    public async Task<ActionResult<List<object>>> GetTotalProductsSold()
+    {
+        var productsSold = await _atendimentoProdutoEntityRepository.GetQueryable()
+            .AsNoTracking()
+            .GroupBy(ap => ap.Produto.Nome)
+            .Select(group => new
+            {
+                ProductName = group.Key,
+                QuantitySold = group.Sum(ap => ap.Quantidade)
+            })
+            .ToListAsync<object>();
+
+        return Ok(productsSold);
+    }
+
+    /// <summary>
+    /// Obtém o total por categoria
+    /// </summary>
+    [HttpGet("TotalProductsSoldByCategory")]
+    public async Task<ActionResult<List<object>>> GetTotalProductsSoldByCategory()
+    {
+        var productsSold = await _atendimentoProdutoEntityRepository.GetQueryable()
+            .AsNoTracking()
+            .Include(i => i.Produto)
+            .ThenInclude(ti => ti.Categoria)
+            .GroupBy(ap => ap.Produto.Categoria.Nome)
+            .Select(group => new
+            {
+                CategoryName = group.Key,
+                QuantitySold = group.Sum(ap => ap.Quantidade)
+            })
+            .ToListAsync<object>();
+
+        return Ok(productsSold);
     }
 }

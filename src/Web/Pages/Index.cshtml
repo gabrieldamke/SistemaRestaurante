@@ -47,7 +47,9 @@
 </body>
 
 <script>
-    fetch("https://localhost:5001/api/v1/Garcom/SalesByGarcom")
+    const uri = "@ViewData["Uri"]";
+
+    fetch(uri + "/api/v1/Garcom/SalesByGarcom")
         .then(response => response.json())
         .then(data => {
             const garcons = data.map(obj => obj.garcom);
@@ -83,7 +85,7 @@
             console.log("Error: " + error);
         });
 
-    fetch("https://localhost:5001/api/v1/Mesa/SalesByMesa")
+    fetch(uri + "/api/v1/Mesa/SalesByMesa")
         .then(response => response.json())
         .then(data => {
             const mesas = data.map(obj => obj.mesaId);
@@ -118,7 +120,8 @@
         .catch(error => {
             console.log("Error: " + error);
         });
-    fetch("https://localhost:5001/api/v1/Atendimento/TotalProductsSold")
+        
+    fetch(uri + "/api/v1/Atendimento/TotalProductsSold")
         .then(response => response.json())
         .then(data => {
             const ProductName = data.map(obj => obj.productName);
@@ -153,7 +156,8 @@
         .catch(error => {
             console.log("Error: " + error);
         });
-    fetch("https://localhost:5001/api/v1/Atendimento/TotalProductsSoldByCategory")
+        
+    fetch(uri + "/api/v1/Atendimento/TotalProductsSoldByCategory")
         .then(response => response.json())
         .then(data => {
             const ProductName = data.map(obj => obj.categoryName);
@@ -188,4 +192,5 @@
         .catch(error => {
             console.log("Error: " + error);
         });
+
 </script>

@@ -4,7 +4,6 @@ using Data.Context;
 using Domain.Entities.Shared;
 using Domain.Interfaces;
 using Domain.Types;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
@@ -105,7 +104,7 @@ public class BaseEntityRepository<T> : IEntityRepository<T> where T : Entity
     {
         try
         {
-            var entity = await _context.Set<T>().FindAsync(id);
+            var entity = await GetByIdAsync(id);
             if (entity is null)
             {
                 throw new ArgumentException("Entidade nâo encontrada");
@@ -117,15 +116,16 @@ public class BaseEntityRepository<T> : IEntityRepository<T> where T : Entity
         }
         catch (DbUpdateException e)
         {
-            if (e.InnerException is not SqliteException sqliteException) throw;
-            switch (sqliteException)
-            {
-                case { SqliteExtendedErrorCode: 1811 }:
-                    throw new ConstraintException(
-                        "Não é possível excluir o registro pois há conflito em outros registros");
-                default:
-                    throw;
-            }
+            // if (e.InnerException is not SqliteException sqliteException) throw;
+            // switch (sqliteException)
+            // {
+            //     case { SqliteExtendedErrorCode: 1811 }:
+            //         throw new ConstraintException(
+            //             "Não é possível excluir o registro pois há conflito em outros registros");
+            //     default:
+            //         throw;
+            // }
+            throw;
         }
     }
 

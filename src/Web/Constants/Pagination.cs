@@ -2,5 +2,5 @@
 
 public static class Pagination
 {
-    public const int PageSize = 3;
+    public const int PageSize = 10;
 }

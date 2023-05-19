@@ -68,6 +68,21 @@ namespace Web.ApiClient
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Atendimento>> GetAllAtendimentosFilteredAsync(int? mesaId, int? garcomId, bool? includeAll, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Obtém todos os produtos dos atendimentos
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AtendimentoProduto>> GetAllAtendimentosProdutosAsync(int atendimentoId);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Obtém todos os produtos dos atendimentos
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AtendimentoProduto>> GetAllAtendimentosProdutosAsync(int atendimentoId, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Obtém um atendimento pelo seu id
         /// </summary>
         /// <returns>Success</returns>
@@ -173,6 +188,36 @@ namespace Web.ApiClient
         System.Threading.Tasks.Task<AtendimentoProduto> RemoveProdutoAsync(int id, int? produtoId, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Obtém o total de produtos vendidos
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> TotalProductsSoldAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Obtém o total de produtos vendidos
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> TotalProductsSoldAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Obtém o total por categoria
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> TotalProductsSoldByCategoryAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Obtém o total por categoria
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> TotalProductsSoldByCategoryAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Obtém todas as categorias de forma paginada
         /// </summary>
         /// <returns>Success</returns>
@@ -261,6 +306,15 @@ namespace Web.ApiClient
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<Categoria> DeleteCategoriaAsync(int id, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> SalesByGarcomAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> SalesByGarcomAsync(System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Obtém todos os garçons de forma paginada
@@ -351,6 +405,21 @@ namespace Web.ApiClient
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<Garcom> DeleteGarcomAsync(int id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Obtém as vendas por Mesa
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> SalesByMesaAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Obtém as vendas por Mesa
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<object>> SalesByMesaAsync(System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Obtém todas as mesas de forma paginada
@@ -522,7 +591,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllProdutosFilteredAsync(string? name, int? categoriaId, bool? includeAll);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllProdutosFilteredAsync(string? name, bool? includeAll);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -530,7 +599,7 @@ namespace Web.ApiClient
         /// </summary>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllProdutosFilteredAsync(string? name, int? categoriaId, bool? includeAll, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Produto>> GetAllProdutosFilteredAsync(string? name, bool? includeAll, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Obtém um produto pelo seu id

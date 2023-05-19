@@ -47,7 +47,6 @@ public class ProdutoController : ApiBaseController
     /// Obtém todos os produtos com filtro
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="categoriaId"></param>
     /// <param name="includeAll"></param>
     /// <returns></returns>
     [HttpGet("filter", Name = "GetAllProdutosFiltered")]
@@ -56,12 +55,11 @@ public class ProdutoController : ApiBaseController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllFiltered(
         [FromQuery] string? name,
-        [FromQuery] int? categoriaId,
         bool includeAll = false
     )
     {
         var produtos = await _produtoEntityRepository.GetAllAsync(
-            x => x.Nome.Contains(name ?? string.Empty) && x.CategoriaId == categoriaId,
+            x => x.Nome.Contains(name ?? string.Empty),
             includeAll: includeAll
         );
         return Ok(produtos);

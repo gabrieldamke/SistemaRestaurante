@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Web.ApiClient;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages;
 
 public class IndexModel : PageModel
 {
-    public void OnGet()
+    public void OnGet([FromServices] IConfiguration configuration)
     {
-        // Method intentionally left empty.
+        var uri = configuration.GetSection("Api:Uri").Value;
+        ViewData["Uri"] = uri;
     }
 }

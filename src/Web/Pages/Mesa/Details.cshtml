@@ -63,6 +63,19 @@
                     </div>
                 </form>
             }
+            
+            @if (Model.Mesa.Status == MesaStatus.Ocupada)
+            {
+                <form method="post">
+                    <div>
+                        <input hidden="hidden" asp-for="Mesa.Id"/>
+                    </div>
+                    
+                    <div>
+                        <input type="submit" value="Fechar Mesa"/>
+                    </div>
+                </form>
+            }
 
             <hr class="my-4"/>
 
