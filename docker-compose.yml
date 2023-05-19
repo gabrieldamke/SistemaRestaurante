@@ -2,7 +2,6 @@
   api:
     image: api
     ports:
-      - 5001:445
       - 5000:80
     build:
       context: .
@@ -11,7 +10,6 @@
   web:
     image: web
     ports:
-      - 3001:443
       - 3000:80
     build:
       context: .
