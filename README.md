@@ -53,3 +53,14 @@ dotnet run -p .\Web
 ```
 
 - Acesse a aplicação em `https://localhost:3001` ou `http://localhost:3000`
+
+### Docker
+
+- Execute o comando para rodar a aplicação
+```bash
+docker-compose up -d
+```
+
+- Acesse as aplicações através dos endereços:
+  - API `http://localhost:5000`
+  - WEB `http://localhost:3000`
