@@ -10,7 +10,7 @@ public static class ServicesInjectorConfig
     public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<RestauranteDbContext>(options =>
-            options.UseSqlite(configuration.GetConnectionString("RestauranteDb"))
+            options.UseSqlServer(configuration.GetConnectionString("RestauranteDb"))
                 .EnableSensitiveDataLogging());
 
         services.AddScoped(typeof(IEntityRepository<>), typeof(BaseEntityRepository<>));

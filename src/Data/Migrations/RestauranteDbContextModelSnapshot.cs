@@ -3,6 +3,7 @@ using System;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -15,41 +16,37 @@ namespace Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Domain.Entities.Atendimento", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GarcomId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("GarcomId1")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("HoraAbertura")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("HoraFechamento")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("MesaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("MesaId1")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GarcomId");
 
-                    b.HasIndex("GarcomId1");
-
                     b.HasIndex("MesaId");
-
-                    b.HasIndex("MesaId1");
 
                     b.ToTable("Atendimentos");
 
@@ -58,40 +55,40 @@ namespace Data.Migrations
                         {
                             Id = 1,
                             GarcomId = 1,
-                            HoraAbertura = new DateTime(2023, 5, 7, 16, 5, 35, 618, DateTimeKind.Local).AddTicks(2983),
-                            HoraFechamento = new DateTime(2023, 5, 7, 17, 5, 35, 618, DateTimeKind.Local).AddTicks(2998),
+                            HoraAbertura = new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8752),
+                            HoraFechamento = new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8763),
                             MesaId = 1
                         },
                         new
                         {
                             Id = 2,
                             GarcomId = 2,
-                            HoraAbertura = new DateTime(2023, 5, 7, 16, 5, 35, 618, DateTimeKind.Local).AddTicks(3006),
-                            HoraFechamento = new DateTime(2023, 5, 7, 17, 5, 35, 618, DateTimeKind.Local).AddTicks(3007),
+                            HoraAbertura = new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8769),
+                            HoraFechamento = new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8770),
                             MesaId = 2
                         },
                         new
                         {
                             Id = 3,
                             GarcomId = 3,
-                            HoraAbertura = new DateTime(2023, 5, 7, 16, 5, 35, 618, DateTimeKind.Local).AddTicks(3008),
-                            HoraFechamento = new DateTime(2023, 5, 7, 17, 5, 35, 618, DateTimeKind.Local).AddTicks(3009),
+                            HoraAbertura = new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8771),
+                            HoraFechamento = new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8771),
                             MesaId = 3
                         },
                         new
                         {
                             Id = 4,
                             GarcomId = 4,
-                            HoraAbertura = new DateTime(2023, 5, 7, 16, 5, 35, 618, DateTimeKind.Local).AddTicks(3010),
-                            HoraFechamento = new DateTime(2023, 5, 7, 17, 5, 35, 618, DateTimeKind.Local).AddTicks(3011),
+                            HoraAbertura = new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8772),
+                            HoraFechamento = new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8772),
                             MesaId = 4
                         },
                         new
                         {
                             Id = 5,
                             GarcomId = 5,
-                            HoraAbertura = new DateTime(2023, 5, 7, 16, 5, 35, 618, DateTimeKind.Local).AddTicks(3012),
-                            HoraFechamento = new DateTime(2023, 5, 7, 17, 5, 35, 618, DateTimeKind.Local).AddTicks(3013),
+                            HoraAbertura = new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8773),
+                            HoraFechamento = new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8773),
                             MesaId = 5
                         });
                 });
@@ -99,19 +96,19 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.AtendimentoProduto", b =>
                 {
                     b.Property<int>("AtendimentoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("ProdutoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Preco")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantidade")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("AtendimentoId", "ProdutoId");
 
@@ -214,15 +211,17 @@ namespace Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -265,19 +264,21 @@ namespace Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeroTelefone")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -325,16 +326,18 @@ namespace Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("HoraAbertura")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Numero")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -377,21 +380,23 @@ namespace Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoriaId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Preco")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -453,24 +458,16 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Atendimento", b =>
                 {
                     b.HasOne("Domain.Entities.Garcom", "Garcom")
-                        .WithMany()
+                        .WithMany("Atendimentos")
                         .HasForeignKey("GarcomId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Garcom", null)
-                        .WithMany("Atendimentos")
-                        .HasForeignKey("GarcomId1");
-
                     b.HasOne("Domain.Entities.Mesa", "Mesa")
-                        .WithMany()
+                        .WithMany("Atendimentos")
                         .HasForeignKey("MesaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entities.Mesa", null)
-                        .WithMany("Atendimentos")
-                        .HasForeignKey("MesaId1");
 
                     b.Navigation("Garcom");
 

@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient<IClient, Client>((service, client) =>
 {
+    var uri = builder.Configuration.GetSection("Api:Uri").Value;
+    client.BaseAddress = new Uri(uri);
     if (service.GetService(typeof(Client)) is not Client c) return;
     c.JsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
     c.JsonSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;

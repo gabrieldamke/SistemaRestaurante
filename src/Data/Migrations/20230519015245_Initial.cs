@@ -17,10 +17,10 @@ namespace Data.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,11 +31,11 @@ namespace Data.Migrations
                 name: "Garcons",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Sobrenome = table.Column<string>(type: "TEXT", nullable: false),
-                    NumeroTelefone = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumeroTelefone = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,11 +46,11 @@ namespace Data.Migrations
                 name: "Mesas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Numero = table.Column<int>(type: "INTEGER", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    HoraAbertura = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Numero = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    HoraAbertura = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,12 +61,12 @@ namespace Data.Migrations
                 name: "Produtos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: false),
-                    Preco = table.Column<decimal>(type: "TEXT", nullable: false),
-                    CategoriaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,14 +83,12 @@ namespace Data.Migrations
                 name: "Atendimentos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    MesaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GarcomId = table.Column<int>(type: "INTEGER", nullable: false),
-                    HoraAbertura = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    HoraFechamento = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    GarcomId1 = table.Column<int>(type: "INTEGER", nullable: true),
-                    MesaId1 = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MesaId = table.Column<int>(type: "int", nullable: false),
+                    GarcomId = table.Column<int>(type: "int", nullable: false),
+                    HoraAbertura = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HoraFechamento = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,31 +100,22 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Atendimentos_Garcons_GarcomId1",
-                        column: x => x.GarcomId1,
-                        principalTable: "Garcons",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Atendimentos_Mesas_MesaId",
                         column: x => x.MesaId,
                         principalTable: "Mesas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Atendimentos_Mesas_MesaId1",
-                        column: x => x.MesaId1,
-                        principalTable: "Mesas",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "AtendimentoProdutos",
                 columns: table => new
                 {
-                    AtendimentoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProdutoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Preco = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Quantidade = table.Column<int>(type: "INTEGER", nullable: false)
+                    AtendimentoId = table.Column<int>(type: "int", nullable: false),
+                    ProdutoId = table.Column<int>(type: "int", nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,14 +172,14 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Atendimentos",
-                columns: new[] { "Id", "GarcomId", "GarcomId1", "HoraAbertura", "HoraFechamento", "MesaId", "MesaId1" },
+                columns: new[] { "Id", "GarcomId", "HoraAbertura", "HoraFechamento", "MesaId" },
                 values: new object[,]
                 {
-                    { 1, 1, null, new DateTime(2023, 5, 6, 22, 1, 0, 481, DateTimeKind.Local).AddTicks(5517), new DateTime(2023, 5, 6, 23, 1, 0, 481, DateTimeKind.Local).AddTicks(5529), 1, null },
-                    { 2, 2, null, new DateTime(2023, 5, 6, 22, 1, 0, 481, DateTimeKind.Local).AddTicks(5534), new DateTime(2023, 5, 6, 23, 1, 0, 481, DateTimeKind.Local).AddTicks(5534), 2, null },
-                    { 3, 3, null, new DateTime(2023, 5, 6, 22, 1, 0, 481, DateTimeKind.Local).AddTicks(5535), new DateTime(2023, 5, 6, 23, 1, 0, 481, DateTimeKind.Local).AddTicks(5535), 3, null },
-                    { 4, 4, null, new DateTime(2023, 5, 6, 22, 1, 0, 481, DateTimeKind.Local).AddTicks(5536), new DateTime(2023, 5, 6, 23, 1, 0, 481, DateTimeKind.Local).AddTicks(5537), 4, null },
-                    { 5, 5, null, new DateTime(2023, 5, 6, 22, 1, 0, 481, DateTimeKind.Local).AddTicks(5537), new DateTime(2023, 5, 6, 23, 1, 0, 481, DateTimeKind.Local).AddTicks(5538), 5, null }
+                    { 1, 1, new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8752), new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8763), 1 },
+                    { 2, 2, new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8769), new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8770), 2 },
+                    { 3, 3, new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8771), new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8771), 3 },
+                    { 4, 4, new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8772), new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8772), 4 },
+                    { 5, 5, new DateTime(2023, 5, 18, 22, 52, 45, 339, DateTimeKind.Local).AddTicks(8773), new DateTime(2023, 5, 18, 23, 52, 45, 339, DateTimeKind.Local).AddTicks(8773), 5 }
                 });
 
             migrationBuilder.InsertData(
@@ -208,20 +197,20 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "AtendimentoProdutos",
-                columns: new[] { "AtendimentoId", "ProdutoId", "Preco", "Quantidade" },
+                columns: new[] { "AtendimentoId", "ProdutoId", "Id", "Preco", "Quantidade" },
                 values: new object[,]
                 {
-                    { 1, 1, 24.9m, 1 },
-                    { 1, 2, 39.9m, 2 },
-                    { 1, 3, 40m, 1 },
-                    { 1, 4, 9.9m, 3 },
-                    { 1, 5, 14.9m, 5 },
-                    { 2, 1, 25.9m, 3 },
-                    { 2, 2, 37.5m, 4 },
-                    { 2, 3, 39.9m, 3 },
-                    { 2, 4, 17.9m, 2 },
-                    { 2, 5, 15.9m, 5 },
-                    { 2, 6, 69.9m, 1 }
+                    { 1, 1, 1, 24.9m, 1 },
+                    { 1, 2, 2, 39.9m, 2 },
+                    { 1, 3, 3, 40m, 1 },
+                    { 1, 4, 4, 9.9m, 3 },
+                    { 1, 5, 5, 14.9m, 5 },
+                    { 2, 1, 6, 25.9m, 3 },
+                    { 2, 2, 7, 37.5m, 4 },
+                    { 2, 3, 8, 39.9m, 3 },
+                    { 2, 4, 9, 17.9m, 2 },
+                    { 2, 5, 10, 15.9m, 5 },
+                    { 2, 6, 11, 69.9m, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -235,19 +224,9 @@ namespace Data.Migrations
                 column: "GarcomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Atendimentos_GarcomId1",
-                table: "Atendimentos",
-                column: "GarcomId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Atendimentos_MesaId",
                 table: "Atendimentos",
                 column: "MesaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Atendimentos_MesaId1",
-                table: "Atendimentos",
-                column: "MesaId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_CategoriaId",
