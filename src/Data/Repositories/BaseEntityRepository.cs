@@ -4,6 +4,7 @@ using Data.Context;
 using Domain.Entities.Shared;
 using Domain.Interfaces;
 using Domain.Types;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
@@ -116,16 +117,15 @@ public class BaseEntityRepository<T> : IEntityRepository<T> where T : Entity
         }
         catch (DbUpdateException e)
         {
-            // if (e.InnerException is not SqliteException sqliteException) throw;
-            // switch (sqliteException)
-            // {
-            //     case { SqliteExtendedErrorCode: 1811 }:
-            //         throw new ConstraintException(
-            //             "Não é possível excluir o registro pois há conflito em outros registros");
-            //     default:
-            //         throw;
-            // }
-            throw;
+            if (e.InnerException is not SqlException sqlException) throw;
+            switch (sqlException.Number)
+            {
+                case 547:
+                    throw new ConstraintException(
+                        "Não é possível excluir o registro pois há conflito em outros registros");
+                default:
+                    throw;
+            }
         }
     }
 
