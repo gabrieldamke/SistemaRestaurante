@@ -21,7 +21,7 @@
       - 1433:1433
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: 1q2w3e4r@#$
+      SA_PASSWORD: 1q2w3e4r@#
     restart: always
     healthcheck:
       test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -Q 'SELECT 1' || exit 1" ]
