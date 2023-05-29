@@ -2,7 +2,7 @@
   api:
     image: api
     ports:
-      - 5000:80
+      - 5001:80
     build:
       context: .
       dockerfile: src/Api/Dockerfile
@@ -12,7 +12,7 @@
   web:
     image: web
     ports:
-      - 3000:80
+      - 3001:80
     build:
       context: .
       dockerfile: src/Web/Dockerfile
