@@ -13,6 +13,6 @@ public static class ServicesInjectorConfig
             options.UseSqlServer(configuration.GetConnectionString("RestauranteDb"))
                 .EnableSensitiveDataLogging());
 
-        services.AddScoped(typeof(IEntityRepository<>), typeof(BaseEntityRepository<>));git 
+        services.AddScoped(typeof(IEntityRepository<>), typeof(BaseEntityRepository<>));
     }
 }
