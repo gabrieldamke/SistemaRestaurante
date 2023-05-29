@@ -15,7 +15,7 @@
             <input hidden="hidden" asp-for="Mesa.Id" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="Mesa.Numero" class="control-label"></label>
+            <label asp-for="Mesa.Numero" class="control-label">Número</label>
             <input asp-for="Mesa.Numero" class="form-control" />
             <span asp-validation-for="Mesa.Numero" class="text-danger"></span>
         </div>
@@ -25,7 +25,7 @@
             <span asp-validation-for="Mesa.HoraAbertura" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Mesa.Status" class="control-label"></label>
+            <label asp-for="Mesa.Status" class="control-label">Situação</label>
             <select asp-for="Mesa.Status" asp-items="Model.Status" class="form-control"></select>
             <span asp-validation-for="Mesa.Status" class="text-danger"></span>
         </div>

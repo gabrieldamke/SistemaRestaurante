@@ -16,12 +16,22 @@
         </div>
         <div class="form-group">
             <label asp-for="Atendimento.HoraAbertura" class="form-label">Hora de Abertura:</label>
-            <input asp-for="Atendimento.HoraAbertura" class="form-control" />
+            <div class="input-group">
+                <input asp-for="Atendimento.HoraAbertura" class="form-control datepicker"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
             <span asp-validation-for="Atendimento.HoraAbertura" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Atendimento.HoraFechamento" class="form-label">Hora de Fechamento:</label>
-            <input asp-for="Atendimento.HoraFechamento" class="form-control" />
+            <div class="input-group">
+                <input asp-for="Atendimento.HoraFechamento" class="form-control datepicker"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
             <span asp-validation-for="Atendimento.HoraFechamento" class="text-danger"></span>
         </div>
         <div class="form-group">

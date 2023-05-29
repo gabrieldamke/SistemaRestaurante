@@ -6,6 +6,8 @@
     build:
       context: .
       dockerfile: src/Api/Dockerfile
+    depends_on:
+      - db
 
   web:
     image: web
@@ -14,6 +16,8 @@
     build:
       context: .
       dockerfile: src/Web/Dockerfile
+    depends_on:
+      - api
 
   db:
     image: mcr.microsoft.com/mssql/server
@@ -29,7 +33,3 @@
       retries: 10
       start_period: 10s
       timeout: 3s
-
-
-volumes:
-  restaurantedb:
